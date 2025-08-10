@@ -1,0 +1,221 @@
+#authentication {
+    margin: 8rem auto;
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+div.bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primarywhite) url(../img/bg-pattern.svg);
+    z-index: -1;
+}
+
+div.authentication {
+    position: relative;
+    margin: 5rem auto 1rem;
+    padding: 2rem 4rem;
+    width: 60rem;
+    height: auto;
+    background: var(--primarywhite);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+div.authentication h2 {
+    margin: 1rem 0 2rem;
+    font-size: 3.5rem;
+    font-weight: 450;
+    color: var(--primaryblack);
+    letter-spacing: -0.4px;
+    text-align: left;
+}
+
+div.authentication h2 span {
+    font-weight: 500;
+    color: var(--secondarycolor);
+}
+
+div.authentication form {
+    position: relative;
+    margin: 1rem auto 2rem;
+    z-index: 1;
+}
+
+div.authentication form label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-size: 1.8rem;
+    font-weight: 450;
+    color: var(--primaryblack);
+    text-align: left;
+}
+
+div.authentication form input {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0 1.5rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.8rem;
+    font-weight: 450;
+    color: var(--primaryblack);
+    background: rgba(4, 194, 127, 0.07);
+    border: 1.5px solid rgba(4, 194, 127, 0.1);
+    border-radius: 6px;
+    text-align: left;
+    box-shadow: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+div.authentication form input:focus {
+    border: 1.5px solid rgba(4, 194, 127, 0.4);
+}
+
+div.authentication form button {
+    position: relative;
+    margin: 1rem 0;
+    padding: 1rem 3rem;
+    font-size: 1.8rem;
+    font-weight: 450;
+    text-align: center;
+    letter-spacing: 0.8px;
+    color: var(--primarywhite);
+    background: var(--secondarycolor);
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+div.authentication form button:hover,
+div.authentication form button:focus,
+div.authentication form button:active {
+    background: var(--primaryblack);
+    transform: translateY(-2px);
+}
+
+div.authentication .errortext {
+    position: relative;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(255, 0, 51, 0.05);
+    border: 2px solid rgba(255, 0, 51, 0.1);
+    border-radius: 4px;
+    width: 100%;
+    height: auto;
+
+    display: none;
+    transition: all 0.2s ease-in-out;
+}
+
+div.authentication .errortext.active {
+    display: flex;
+}
+
+div.authentication .errortext p {
+    margin: 0;
+    width: 90%;
+    font: 400 1.8rem/1.4 var(--mainfont);
+    color: rgba(175, 0, 35, 1);
+    text-align: left;
+    letter-spacing: 0.2px;
+}
+
+div.authentication .errortext i.closeBtn {
+    position: absolute;
+    right: 0.5rem;
+    height: 2.6rem;
+    width: 2.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: rgba(175, 0, 35, 1);
+    background: rgba(255, 0, 51, 0.05);
+    border: 1.8px solid rgba(255, 0, 51, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+div.authentication .errortext i.closeBtn:hover {
+    background: rgba(255, 0, 51, 0.1);
+}
+
+div.authentication hr {
+    border: none;
+    margin-bottom: 2rem;
+    height: 1.5px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+div.authentication p {
+    margin: 1rem auto;
+    font-size: 1.8rem;
+    font-weight: 450;
+    color: var(--primaryblack);
+    text-align: center;
+}
+
+div.authentication p a {
+    position: relative;
+    margin: 0 0.5rem;
+    font-weight: 500;
+    color: var(--secondarycolor);
+    text-decoration: none;
+    user-select: none;
+}
+
+div.authentication p a::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.3s ease-in-out;
+}
+
+div.authentication p a:hover:after,
+div.authentication p a:active:after {
+    transform: scaleX(1);
+    transform-origin: left center;
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 768px) {
+    div.authentication {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    div.authentication {
+        margin: 2rem;
+        padding: 2rem;
+        border-radius: 5px;
+    }
+    div.authentication h2 {
+        font-size: 3rem;
+    }
+
+    div.authentication .errortext p {
+        width: 80%;
+    }
+}

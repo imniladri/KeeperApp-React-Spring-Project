@@ -1,0 +1,192 @@
+#entries {
+    margin: 8rem auto;
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+div.bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primarywhite) url(../img/line-pattern.svg);
+    z-index: -1;
+}
+
+div.entries_banner {
+    position: relative;
+    margin: 6rem auto;
+    padding: 2rem;
+    width: 80%;
+    height: auto;
+    background: var(--primarywhite);
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+div.entries_banner .entries_header {
+    position: relative;
+    margin: auto;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.entries_banner .entries_header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2.5px;
+    background: var(--primarygrey);
+    border-radius: 4px;
+}
+
+div.entries_banner .entries_header h2 {
+    margin: 1rem 0;
+    font: 450 3rem/1.4 var(--mainfont);
+    color: var(--secondarycolor);
+    letter-spacing: -0.4px;
+    text-align: left;
+}
+
+div.entries_banner .entries_header h2 span {
+    font-weight: 500;
+    color: var(--primaryblack);
+}
+
+div.entries_banner .entries_header a {
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    color: var(--primarywhite);
+    background: var(--primaryblack);
+    border-radius: 10rem;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+div.entries_banner .entries_header a:hover {
+    color: var(--primaryblack);
+    background: var(--primarycolor);
+}
+
+div.entries_banner .entries_header a:active {
+    color: var(--primaryblack);
+    background: var(--primaryshade);
+}
+
+div.entries_banner .entries_header a span {
+    font: 450 1.5rem var(--mainfont);
+}
+div.entries_banner .entries_header a svg {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+div.entries_banner .entries_body {
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+div.entries_banner .entries_empty {
+    padding: 4rem;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: var(--primarywhite);
+    border: 2px dashed var(--primarygrey);
+    transition: all 0.15s ease-in-out;
+}
+
+div.entries_banner .entries_empty:hover {
+    filter: brightness(97%);
+}
+
+div.entries_banner .entries_empty img {
+    margin: 1rem 0;
+    width: 6rem;
+    height: auto;
+    opacity: 0.1;
+}
+
+div.entries_banner .entries_empty p {
+    display: block;
+    margin: 1rem 0;
+    font: 450 2.5rem/1.4 var(--mainfont);
+    color: var(--primarygrey);
+    letter-spacing: 0.2px;
+    text-align: center;
+}
+
+div.entries_banner ul li a {
+    position: relative;
+    display: block;
+    margin: 1rem auto;
+    padding: 0.8rem;
+    padding-left: 2rem;
+    font: 450 2rem/1.4 var(--mainfont);
+    color: var(--primaryblack);
+    text-align: left;
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    border-radius: 0 4px 4px 0;
+    background: rgba(1, 43, 81, 0.05);
+    transition: all 0.2s ease-in-out;
+}
+
+div.entries_banner ul li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(1, 43, 81, 0.8);
+    transition: all 0.15s ease-in-out;
+}
+
+div.entries_banner ul li a:active,
+div.entries_banner ul li a:hover {
+    background: rgba(1, 43, 81, 0.08);
+}
+div.entries_banner ul li a:active:before,
+div.entries_banner ul li a:hover:before {
+    width: 8px;
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 576px) {
+    div.entries_banner {
+        padding: 2rem 1rem;
+    }
+    div.entries_banner .entries_header {
+        flex-wrap: wrap;
+    }
+    div.entries_banner .entries_header h2 {
+        line-height: 1;
+    }
+    div.entries_banner .entries_header::after {
+        bottom: -5px;
+    }
+    div.entries_banner .entries_header a span {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    div.entries_banner .entries_header a svg {
+        display: none;
+    }
+}

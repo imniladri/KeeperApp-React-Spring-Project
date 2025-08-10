@@ -1,0 +1,147 @@
+#entries {
+    margin: 8rem auto;
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+div.bg-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primarywhite) url(../img/line-pattern.svg);
+    z-index: -1;
+}
+
+section.newEntry div.entries_banner {
+    position: relative;
+    margin: 6rem auto;
+    padding: 2rem;
+    width: 80%;
+    height: auto;
+    background: var(--primarywhite);
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+section.newEntry div.entries_banner form {
+    position: relative;
+    margin: 1rem auto;
+    z-index: 1;
+}
+
+section.newEntry div.entries_banner form .entries_header {
+    position: relative;
+    margin: auto;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section.newEntry div.entries_banner form .entries_header h2 {
+    margin: 1rem 0;
+    font: 450 3.5rem/0.8 var(--mainfont);
+    color: var(--secondarycolor);
+    letter-spacing: -0.8px;
+    text-align: left;
+}
+
+section.newEntry div.entries_banner form .entries_header h2 span {
+    font-weight: 500;
+    color: var(--primaryblack);
+}
+
+section.newEntry div.entries_banner form .entries_header button {
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    color: var(--primarywhite);
+    background: var(--primaryblack);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 10rem;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntry div.entries_banner form .entries_header button:hover {
+    color: var(--primaryblack);
+    background: var(--primarycolor);
+}
+
+section.newEntry div.entries_banner form .entries_header button:focus,
+section.newEntry div.entries_banner form .entries_header button:active {
+    color: var(--primaryblack);
+    background: rgba(240, 197, 43, 1);
+}
+
+section.newEntry div.entries_banner form .entries_header button span {
+    font: 450 1.6rem var(--mainfont);
+}
+section.newEntry div.entries_banner form .entries_header button svg {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+section.newEntry div.entries_banner form .entry_input label {
+    margin: 1rem 0;
+    font: 450 2.2rem/1.2 var(--mainfont);
+    color: var(--primaryblack);
+    text-align: left;
+}
+
+section.newEntry div.entries_banner form .entry_input input {
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    font: 450 2rem/1.4 var(--mainfont);
+    color: var(--primaryblack);
+    background: rgba(4, 194, 127, 0.05);
+    border: 2.5px solid rgba(4, 194, 127, 0.45);
+    border-radius: 6px;
+    text-align: left;
+    letter-spacing: 0.2px;
+    box-shadow: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntry div.entries_banner form .entry_input input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+section.newEntry div.entries_banner form .entry_input input:focus {
+    border: 2.5px solid rgba(4, 194, 127, 0.65);
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 576px) {
+    section.newEntry div.entries_banner {
+        padding: 2rem 1rem;
+    }
+    section.newEntry div.entries_banner form .entries_header {
+        flex-wrap: wrap;
+    }
+    section.newEntry div.entries_banner form .entries_header h2 {
+        font-size: 3.5rem;
+    }
+    section.newEntry div.entries_banner form .entries_header button span {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    section.newEntry div.entries_banner form .entries_header button svg {
+        display: none;
+    }
+}

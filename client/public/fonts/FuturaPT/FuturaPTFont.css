@@ -1,0 +1,57 @@
+/* Futura PT Font Faces (300, 400, 450, 500, 600, 700, 800) */
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT300Light.woff) format("woff");
+    font-weight: 300;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT400Book.woff) format("woff");
+    font-weight: 400;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT450Medium.woff) format("woff");
+    font-weight: 450;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT500Demi.woff) format("woff");
+    font-weight: 500;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT600Heavy.woff) format("woff");
+    font-weight: 600;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT700Bold.woff) format("woff");
+    font-weight: 700;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url(/fonts/FuturaPT/FuturaPT800ExtraBold.woff) format("woff");
+    font-weight: 800;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+}

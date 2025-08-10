@@ -1,0 +1,161 @@
+body {
+    background: url(../img/home-pattern.png) repeat fixed !important;
+}
+
+#home {
+    margin: 10rem auto;
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.home-banner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: auto;
+}
+
+div.home-banner .banner-content {
+    width: 50%;
+}
+
+div.home-banner .banner-image {
+    width: 50%;
+}
+
+div.home-banner .banner-content,
+div.home-banner .banner-image {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+div.banner-content h5 {
+    margin: 3rem 0 1rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    font-family: var(--mainfont);
+    color: var(--primaryblack);
+    letter-spacing: 1.5px;
+}
+
+div.banner-content h5 span {
+    font-weight: 450;
+}
+
+div.home-banner .banner-content h2 {
+    margin: 1rem 0;
+    font-size: 5rem;
+    font-weight: 450;
+    line-height: 1;
+    color: var(--primaryblack);
+}
+
+div.home-banner .banner-content h2 span {
+    font-weight: 500;
+}
+
+div.home-banner .banner-content p {
+    margin: 1rem 0;
+    font-size: 2.3rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--primaryblack);
+}
+
+div.home-banner .banner-content a.btn {
+    position: relative;
+    margin: 1.5rem 0;
+    padding: 1.5rem 3.5rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    text-align: center;
+    color: var(--primarywhite);
+    background: var(--primaryblack);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+div.home-banner .banner-content a.btn:hover {
+    transform: translateY(-2px);
+}
+
+div.home-banner .banner-content p.link-text {
+    margin: 1rem 0;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--primaryblack);
+}
+
+div.home-banner .banner-content p.link-text a {
+    position: relative;
+    margin: 0 0.5rem;
+    font-weight: 450;
+    text-decoration: none;
+    user-select: none;
+    color: var(--primaryblack);
+    transition: all 0.2s ease-in-out;
+}
+
+div.home-banner .banner-content p.link-text:hover a {
+    transform: translateY(-2px);
+}
+
+div.home-banner .banner-image img {
+    margin: auto;
+    width: 60rem;
+    height: auto;
+    transform: translate(-10rem, 10rem);
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 1240px) {
+    div.home-banner .banner-image img {
+        width: 50rem;
+    }
+}
+
+@media (max-width: 992px) {
+    div.home-banner {
+        flex-direction: column;
+    }
+    div.home-banner .banner-content,
+    div.home-banner .banner-image {
+        width: 100%;
+    }
+    div.home-banner .banner-content h2 {
+        font-size: 5rem;
+    }
+    div.home-banner .banner-content p {
+        font-size: 2.2rem;
+    }
+    div.home-banner .banner-image img {
+        width: 40rem;
+        transform: translate(-5rem, 5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    div.home-banner .banner-image img {
+        margin: 3rem auto;
+        width: 100%;
+        transform: translate(0, 0);
+    }
+}
+
+@media (max-width: 392px) {
+    div.home-banner .banner-content h2 {
+        font-size: 4rem;
+    }
+}

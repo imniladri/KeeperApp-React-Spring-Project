@@ -1,0 +1,83 @@
+header#header {
+    position: fixed;
+    top: 0;
+    padding: 1rem 0;
+    width: 100%;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+}
+
+header#header nav {
+    position: relative;
+    margin: 1rem auto;
+    padding: 0.8rem 2rem;
+    background: var(--primaryblack);
+    border-radius: 4px;
+    width: 80%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header#header nav .nav-brand a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+header#header nav .nav-brand a img {
+    width: 4.5rem;
+    height: auto;
+}
+
+header#header nav .nav-brand a span {
+    font-size: 2.8rem;
+    font-weight: 450;
+    color: #f8fafc;
+    text-align: center;
+}
+
+header#header nav .nav-items {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header#header nav .nav-items .nav-btn {
+    margin: auto 0.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 1.8rem;
+    font-weight: 450;
+    color: var(--primaryblack);
+    background: var(--primarycolor);
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header#header nav .nav-items .nav-btn i {
+    font-size: 2.5rem;
+}
+
+header#header nav .nav-items button.nav-btn {
+    color: var(--primarywhite);
+    background: var(--dangercolor);
+}
+
+header#header nav .nav-items .nav-btn:hover {
+    filter: brightness(110%);
+}
+header#header nav .nav-items button.nav-btn:hover {
+    filter: brightness(90%);
+}
