@@ -145,3 +145,56 @@ section.newEntry div.entries_banner form .entry_input input:focus {
         display: none;
     }
 }
+
+
+
+section.newEntry div.entries_banner form .entry_input .errortext {
+    position: relative;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(255, 0, 51, 0.05);
+    border: 2px solid rgba(255, 0, 51, 0.1);
+    border-radius: 4px;
+    width: 100%;
+    height: auto;
+
+    display: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntry div.entries_banner form .entry_input .errortext.active {
+    display: flex;
+}
+
+section.newEntry div.entries_banner form .entry_input .errortext p {
+    margin: 0;
+    width: 90%;
+    font: 400 1.8rem/1.4 var(--mainfont);
+    color: rgba(175, 0, 35, 1);
+    text-align: left;
+    letter-spacing: 0.2px;
+}
+
+section.newEntry div.entries_banner form .entry_input .errortext i.closeBtn {
+    position: absolute;
+    right: 0.5rem;
+    height: 2.6rem;
+    width: 2.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    color: rgba(175, 0, 35, 1);
+    background: rgba(255, 0, 51, 0.05);
+    border: 1.8px solid rgba(255, 0, 51, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+section.newEntry div.entries_banner form .entry_input .errortext i.closeBtn:hover {
+    background: rgba(255, 0, 51, 0.1);
+}
+

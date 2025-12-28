@@ -41,15 +41,20 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 
-	@GetMapping("/user/{username}")
-	public User getUserById(@PathVariable("username") String username) {
-		return userService.getUser(username);
+	@GetMapping("/validate/username/{username}")
+	public boolean getUserByUserName(@PathVariable("username") String username) {
+		return userService.validateUsername(username);
+	}
+	
+	@GetMapping("/validate/email/{email}")
+	public boolean getUserByEmail(@PathVariable("email") String email) {
+		return userService.validateEmail(email);
 	}
 
-	@PostMapping("/user")
-	public User registerUser(@RequestBody User user) {
+	@PostMapping("/register/user")
+	public boolean registerUser(@RequestBody User user) {
 		user.setUserid(0);
-		return userService.saveUser(user);
+		return userService.saveUser(user) != null;
 	}
 
 }

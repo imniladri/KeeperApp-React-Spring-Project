@@ -46,7 +46,7 @@ function HeaderUserAuthorised() {
 
     return (
         <>
-            <Link to="/dashboard" className="nav-btn">
+            <Link to="/dashboard" className="nav-btn icon-btn">
                 <i className="bx bxs-user"></i>
             </Link>
             <button className="nav-btn" role="button" onClick={logoutUser}>

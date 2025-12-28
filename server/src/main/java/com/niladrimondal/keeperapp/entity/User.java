@@ -77,4 +77,11 @@ public class User {
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", name=" + name + ", email=" + email + ", username=" + username
+				+ ", password=" + password + ", dob=" + dob + "]";
+	}
+	
 }

@@ -9,204 +9,268 @@ import { userObj } from "../utils/user";
 import "../styles/auth.css";
 
 export default function Register() {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const [user, setUser] = useState(null);
+	const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        document.title = "Registration | DairyLogs";
+	useEffect(() => {
+		document.title = "Registration | DairyLogs";
 
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-            setUser(user);
-            navigate("/");
-        }
-    }, []);
+		const user = JSON.parse(localStorage.getItem("user"));
+		if (user) {
+			setUser(user);
+			navigate("/");
+		}
+	}, []);
 
-    const [registerUserData, setRegisterUserData] = useState(userObj);
+	const [registerUserData, setRegisterUserData] = useState(userObj);
 
-    const [validationError, setValidationError] = useState({
-        message: "",
-        active: false,
-    });
+	const [validationError, setValidationError] = useState({
+		message: "",
+		active: false,
+	});
 
-    // Input Field Update Function
-    const inputOnChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
+	const [validationSuccess, setValidationSuccess] = useState({
+		message: "",
+		active: false,
+	});
 
-        setRegisterUserData({
-            ...registerUserData,
-            [name]: value,
-        });
-    };
+	// Input Field Update Function
+	const inputOnChange = (event) => {
+		const name = event.target.name;
+		const value = event.target.value;
 
-    // Form Submit Function
-    const formSubmitAction = (event) => {
-        event.preventDefault();
-        const validationCheck = handleRegister();
-        if (validationCheck) {
-            registerUser(registerUserData);
-        }
-    };
+		setRegisterUserData({
+			...registerUserData,
+			[name]: value,
+		});
+	};
 
-    // Register Validation Function
-    const handleRegister = () => {
+	// Form Submit Function
+	const formSubmitAction = (event) => {
+		event.preventDefault();
+		const validationCheck = handleRegister();
+		if (validationCheck) {
+			registerUser(registerUserData);
+		}
+	};
 
-        if (registerUserData.name.trim() === "") {
-            setValidationError({
-                message: "Your Name Required!",
-                active: true,
-            });
-            window.scrollTo(0, 0);
-            return false;
-        }
-        else if (registerUserData.email.trim() === "") {
-            setValidationError({
-                message: "Your Email Required!",
-                active: true,
-            });
-            window.scrollTo(0, 0);
-            return false;
-        }
-        else if (registerUserData.username.trim() === "") {
-            setValidationError({
-                message: "Username Required!",
-                active: true,
-            });
-            window.scrollTo(0, 0);
-            return false;
-        }
-        else if (registerUserData.password.trim() === "") {
-            setValidationError({
-                message: "Password Required!",
-                active: true,
-            });
-            window.scrollTo(0, 0);
-            return false;
-        }
-        else if (registerUserData.dob.trim().length === 0) {
-            setValidationError({
-                message: "Your DOB Required!",
-                active: true,
-            });
-            window.scrollTo(0, 0);
-            return false;
-        } else {
-            return true;
-        }
-    };
+	// Register Validation Function
+	const handleRegister = () => {
+		if (registerUserData.name.trim() === "") {
+			setValidationError({
+				message: "Your Name Required!",
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return false;
+		} else if (registerUserData.email.trim() === "") {
+			setValidationError({
+				message: "Your Email Required!",
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return false;
+		} else if (registerUserData.username.trim() === "") {
+			setValidationError({
+				message: "Username Required!",
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return false;
+		} else if (registerUserData.password.trim() === "") {
+			setValidationError({
+				message: "Password Required!",
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return false;
+		} else if (registerUserData.dob.trim().length === 0) {
+			setValidationError({
+				message: "Your DOB Required!",
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return false;
+		} else {
+			return true;
+		}
+	};
 
-    // Server Function
-    const registerUser = async (data) => {
-        try {
-            const response = await axios.post(`${API_URL}/api/user`, data);
-            // console.log("Response:", response);
-            return response.data;
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
+	// Server Function
+	const registerUser = async (data) => {
+		try {
+			const isEmailExist = await axios.get(
+				`${API_URL}/api/validate/email/${encodeURIComponent(
+					data.email
+				)}`
+			);
+			const isUsernameExist = await axios.get(
+				`${API_URL}/api/validate/username/${data.username}`
+			);
 
-    return (
-        <>
-            <Header user={user} linkUrl="/" linkText="Home" />
+			if (isEmailExist.data) {
+				setValidationError({
+					message: "Email Already Registered!",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+				return false;
+			}
+			if (isUsernameExist.data) {
+				setValidationError({
+					message: "Username Already Registered!",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+				return false;
+			}
 
-            <section id="authentication">
-                <div className="authentication">
-                    <h2>
-                        <span>Register</span> a new user
-                    </h2>
+			const response = await axios.post(
+				`${API_URL}/api/register/user`,
+				data
+			);
+			// console.log("Response:", response);
+			if (response.data) {
+				setValidationSuccess({
+					message: "Registration Successful! Redirecting to Login...",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+				setTimeout(() => {
+					navigate("/login");
+				}, 3000);
+			} else {
+				setValidationError({
+					message: "Registration Failed! Please try again.",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+			}
+			// return response.data;
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
 
-                    <div
-                        className={
-                            validationError.active
-                                ? "errortext active"
-                                : "errortext"
-                        }
-                    >
-                        <p>{validationError.message}</p>
-                        <i
-                            className="bx bx-x closeBtn"
-                            onClick={() => {
-                                setValidationError({
-                                    message: "",
-                                    active: false,
-                                });
-                            }}
-                        ></i>
-                    </div>
+	return (
+		<>
+			<Header user={user} linkUrl="/" linkText="Home" />
 
-                    <form onSubmit={formSubmitAction}>
-                        <div className="form-field">
-                            <label htmlFor="name">Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={registerUserData.name}
-                                onChange={inputOnChange}
-                            />
-                        </div>
+			<section id="authentication">
+				<div className="authentication">
+					<h2>
+						<span>Register</span> a new user
+					</h2>
 
-                        <div className="form-field">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={registerUserData.email}
-                                onChange={inputOnChange}
-                            />
-                        </div>
+					<div
+						className={
+							validationError.active
+								? "errortext active"
+								: "errortext"
+						}
+					>
+						<p>{validationError.message}</p>
+						<i
+							className="bx bx-x closeBtn"
+							onClick={() => {
+								setValidationError({
+									message: "",
+									active: false,
+								});
+							}}
+						></i>
+					</div>
 
-                        <div className="form-field">
-                            <label htmlFor="username">Username</label>
-                            <input
-                                type="text"
-                                id="username"
-                                name="username"
-                                value={registerUserData.username}
-                                onChange={inputOnChange}
-                            />
-                        </div>
+					<div
+						className={
+							validationSuccess.active
+								? "successtext active"
+								: "successtext"
+						}
+					>
+						<p>{validationSuccess.message}</p>
+						<i
+							className="bx bx-x closeBtn"
+							onClick={() => {
+								setValidationSuccess({
+									message: "",
+									active: false,
+								});
+							}}
+						></i>
+					</div>
 
-                        <div className="form-field">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                value={registerUserData.password}
-                                onChange={inputOnChange}
-                            />
-                        </div>
+					<form onSubmit={formSubmitAction}>
+						<div className="form-field">
+							<label htmlFor="name">Name</label>
+							<input
+								type="text"
+								id="name"
+								name="name"
+								value={registerUserData.name}
+								onChange={inputOnChange}
+							/>
+						</div>
 
-                        <div className="form-field">
-                            <label htmlFor="dob">Date of Birth</label>
-                            <input
-                                type="date"
-                                id="dob"
-                                name="dob"
-                                value={registerUserData.dob}
-                                onChange={inputOnChange}
-                            />
-                        </div>
+						<div className="form-field">
+							<label htmlFor="email">Email</label>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								value={registerUserData.email}
+								onChange={inputOnChange}
+							/>
+						</div>
 
-                        <button type="submit">Register Now</button>
-                    </form>
+						<div className="form-field">
+							<label htmlFor="username">Username</label>
+							<input
+								type="text"
+								id="username"
+								name="username"
+								value={registerUserData.username}
+								onChange={inputOnChange}
+							/>
+						</div>
 
-                    <hr />
-                    <p>
-                        Already have a account?
-                        <Link to="/login" className="link" role="button">
-                            Log In
-                        </Link>
-                    </p>
-                </div>
-            </section>
+						<div className="form-field">
+							<label htmlFor="password">Password</label>
+							<input
+								type="password"
+								id="password"
+								name="password"
+								value={registerUserData.password}
+								onChange={inputOnChange}
+							/>
+						</div>
 
-            <div className="bg-pattern"></div>
-        </>
-    );
+						<div className="form-field">
+							<label htmlFor="dob">Date of Birth</label>
+							<input
+								type="date"
+								id="dob"
+								name="dob"
+								value={registerUserData.dob}
+								onChange={inputOnChange}
+							/>
+						</div>
+
+						<button type="submit">Register Now</button>
+					</form>
+
+					<hr />
+					<p>
+						Already have a account?
+						<Link to="/login" className="link" role="button">
+							Log In
+						</Link>
+					</p>
+				</div>
+			</section>
+
+			<div className="bg-pattern"></div>
+		</>
+	);
 }

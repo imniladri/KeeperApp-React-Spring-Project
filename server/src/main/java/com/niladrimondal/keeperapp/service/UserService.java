@@ -34,14 +34,14 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	public boolean validateUser(String username) {
+	public boolean validateUsername(String username) {
 		User existsUser = userRepository.findByUsername(username);
-		return existsUser == null;
+		return existsUser != null;
 	}
 
 	public boolean validateEmail(String email) {
 		User existsEmail = userRepository.findByEmail(email);
-		return existsEmail == null;
+		return existsEmail != null;
 	}
 
 	public boolean validateLogin(String username, String password) {
