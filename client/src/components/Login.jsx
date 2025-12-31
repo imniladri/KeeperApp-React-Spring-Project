@@ -9,6 +9,14 @@ import API_URL from "../utils/API_URL";
 import "../styles/auth.css";
 
 export default function Login() {
+	const headerProps = {
+		auth: [{ link: "/", text: "Home" }],
+		noAuth: [
+			{ link: "/register", text: "Register" },
+			{ link: "/", text: "Home" },
+		],
+	};
+
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
@@ -64,8 +72,7 @@ export default function Login() {
 
 	// Login Validation Function
 	const handleLogin = (user) => {
-		console.log("User data:", user);
-		if (loginUserData.username === user.username && user.status === 200) {
+		if (loginUserData.username === user.username && user !== null) {
 			localStorage.setItem("user", JSON.stringify(user));
 			navigate("/");
 		} else if (user.status === 400) {
@@ -96,7 +103,7 @@ export default function Login() {
 	// Server Function
 	const loginUser = async (data) => {
 		try {
-			const response = await axios.post(`${API_URL}/api/login`, data);
+			const response = await axios.post(`${API_URL}/api/user/login`, data);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
@@ -106,7 +113,7 @@ export default function Login() {
 
 	return (
 		<>
-			<Header user={user} linkUrl="/" linkText="Home" />
+			<Header user={user} headerProps={headerProps} />
 
 			<section id="authentication">
 				<div className="authentication">
@@ -121,7 +128,7 @@ export default function Login() {
 								: "errortext"
 						}
 					>
-						<p>{validationError.message}</p>
+						<p className="errormsg">{validationError.message}</p>
 						<i
 							className="bx bx-x closeBtn"
 							onClick={() => {

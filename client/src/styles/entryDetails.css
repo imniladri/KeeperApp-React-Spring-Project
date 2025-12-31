@@ -1,0 +1,268 @@
+#entryDetails {
+	margin: 8rem auto;
+	position: relative;
+	width: 100%;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
+}
+
+div.entryDetails_banner {
+	position: relative;
+	margin: 6rem auto;
+	padding: 2rem;
+	width: 80%;
+	height: auto;
+	background: var(--primarywhite);
+	border: 2px solid #e2e8f0;
+	border-radius: 4px;
+}
+
+div.entryDetails_banner .entryDetails_header {
+	position: relative;
+	margin: auto;
+	padding: 0.5rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+div.entryDetails_banner .entryDetails_header::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2.5px;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+}
+
+div.entryDetails_banner .entryDetails_header h2 {
+	margin: 1rem 0;
+	font: 450 3.5rem/1.4 var(--mainfont);
+	color: var(--primaryblack);
+	letter-spacing: -0.4px;
+	text-align: left;
+}
+
+div.entryDetails_banner .entryDetails_header h2 span {
+	display: block;
+	padding: 0.5rem 1rem;
+	font: 600 1.4rem var(--mainfont);
+	color: var(--primarywhite);
+	background: var(--primaryblack);
+	letter-spacing: 1px;
+	text-align: center;
+	text-transform: uppercase;
+	width: fit-content;
+	border-radius: 1rem 1rem 0 0;
+}
+
+div.entryDetails_banner .entryDetails_header a {
+	margin: 1rem 0;
+	padding: 1rem 2rem;
+	color: var(--primarywhite);
+	background: var(--primaryblack);
+	border-radius: 10rem;
+	text-decoration: none;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+}
+
+div.entryDetails_banner .entryDetails_header a:hover {
+	color: var(--primaryblack);
+	background: var(--primarycolor);
+}
+
+div.entryDetails_banner .entryDetails_header a:active {
+	color: var(--primaryblack);
+	background: var(--primaryshade);
+}
+
+div.entryDetails_banner .entryDetails_header a span {
+	font: 450 1.5rem var(--mainfont);
+}
+div.entryDetails_banner .entryDetails_header a svg {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+div.entryDetails_banner .entryDetails_body {
+	margin: 3rem 0;
+	padding: auto;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_empty {
+	padding: 4rem;
+	text-decoration: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background: var(--primarywhite);
+	border: 2px dashed var(--primarygrey);
+	transition: all 0.15s ease-in-out;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_empty:hover {
+	filter: brightness(97%);
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_empty img {
+	margin: 1rem 0;
+	width: 6rem;
+	height: auto;
+	opacity: 0.1;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_empty p {
+	display: block;
+	margin: 1rem 0;
+	font: 450 2.5rem/1.4 var(--mainfont);
+	color: var(--primarygrey);
+	letter-spacing: 0.2px;
+	text-align: center;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content {
+	margin: auto;
+	margin-bottom: 3rem;
+	background: var(--primarywhite);
+	border: 2px solid rgba(1, 43, 81, 0.1);
+	border-radius: 4px;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .card-header {
+	margin: 0;
+	padding: 1rem 1.5rem 0.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: rgba(1, 43, 81, 0.05);
+	border-bottom: 2px solid rgba(1, 43, 81, 0.1);
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content h6 {
+	margin: 0.5rem 0;
+	font: 450 1.8rem/1.4 var(--mainfont);
+	color: var(--primaryblack);
+	letter-spacing: 0.2px;
+	text-align: left;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content h6 span {
+	display: block;
+    margin: 0.5rem 0;
+	padding: 0.5rem 1rem;
+	font: 600 1rem var(--mainfont);
+	color: var(--primaryblack);
+	background: var(--primarygrey);
+	letter-spacing: 1px;
+	text-align: center;
+	text-transform: uppercase;
+	width: fit-content;
+	border-radius: 1rem 1rem 0 0;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content p {
+	margin: 0.5rem 0;
+	font: 400 1.9rem/1.5 var(--mainfont);
+	color: var(--primaryblack);
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a {
+	position: relative;
+	margin: 0.5rem;
+	padding: 0.5rem 0.8rem;
+	color: var(--secondarycolor);
+	background: rgba(4, 194, 127, 0.1);
+	text-decoration: none;
+	border-radius: 4px;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn {
+    color: #ef4444;
+    background: rgba(255, 59, 48, 0.1);
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2.5px;
+	border-radius: 2px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: right center;
+	transition: transform 0.3s ease-in-out;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:active,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:hover {
+	background: rgba(4, 194, 127, 0.08);
+}
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn:active,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn:hover {
+	background: rgba(255, 59, 48, 0.08);
+}
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:active:after,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:hover:after {
+	transform: scaleX(1);
+	transform-origin: left center;
+}
+
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a span {
+	font: 450 1.8rem/1.4 var(--mainfont);
+	letter-spacing: 0.4px;
+}
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a svg {
+	width: 2.4rem;
+	height: 2.4rem;
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 576px) {
+	div.entryDetails_banner {
+		padding: 2rem 1rem;
+	}
+	div.entryDetails_banner .entryDetails_header {
+		flex-wrap: wrap;
+	}
+	div.entryDetails_banner .entryDetails_header h2 {
+		line-height: 1;
+	}
+	div.entryDetails_banner .entryDetails_header::after {
+		bottom: -5px;
+	}
+	div.entryDetails_banner .entryDetails_body .entryDetails_content p {
+		line-height: 1.4;
+	}
+	div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a::after {
+		height: 1.5px;
+	}
+	div.entryDetails_banner .entryDetails_header a span,
+	div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a span {
+		display: none;
+	}
+}
+
+@media (min-width: 576px) {
+	div.entryDetails_banner .entryDetails_header a svg,
+	div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:not(.deleteBtn) svg {
+		display: none;
+	}
+}

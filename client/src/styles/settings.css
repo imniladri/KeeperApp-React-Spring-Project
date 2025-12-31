@@ -2,91 +2,185 @@
 @import url(https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css);
 
 * {
-    margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
 }
 
 html {
-    font-size: 62.5%;
+	font-size: 62.5%;
 }
 
 @media (max-width: 992px) {
-    html {
-        font-size: 60%;
-    }
+	html {
+		font-size: 60%;
+	}
 }
 
 @media (max-width: 768px) {
-    html {
-        font-size: 55%;
-    }
+	html {
+		font-size: 55%;
+	}
 }
 
 :root {
-    /* Default Colors */
-    --primaryblack: #012b51;
-    --primarywhite: #ffffff;
-    --primarygrey: #e2e8f0;
+	/* Default Colors */
+	--primaryblack: #012b51;
+	--primarywhite: #ffffff;
+	--primarygrey: #e2e8f0;
 
-    --primarycolor: #ffd600;
-    --secondarycolor: #22c55e;
-    --dangercolor: #ff0033;
-    --primaryshade: #f59e0b;
+	--primarycolor: #ffd600;
+	--secondarycolor: #22c55e;
+	--dangercolor: #ff0033;
+	--primaryshade: #f59e0b;
 
-    /* Default Fonts */
-    --mainfont: "Futura PT", sans-serif;
+	/* Default Fonts */
+	--mainfont: "Futura PT", sans-serif;
 }
 
 body {
-    font-family: var(--mainfont) !important;
-    background: var(--primarywhite) !important;
+	font-family: var(--mainfont) !important;
+	background: var(--primarywhite) !important;
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background: transparent;
+	width: 6px;
+	height: 6px;
+	background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primaryblack);
-    border-radius: 4px;
+	background: var(--primaryblack);
+	border-radius: 4px;
 }
 
 ::selection {
-    color: var(--primarywhite);
-    background: var(--primaryblack);
+	color: var(--primarywhite);
+	background: var(--primaryblack);
 }
 
 img {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 
 button.btn:active,
 button.btn:focus,
 a.btn:active,
 a.btn:focus {
-    box-shadow: none;
+	box-shadow: none;
 }
 
 div.bg-pattern {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: var(--primarywhite) url(../img/line-pattern.svg);
-    z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background: var(--primarywhite) url(../img/bg-pattern.svg) !important;
+	z-index: -1;
 }
 
 div#toastMessage {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
 
-    z-index: 10;
+	z-index: 10;
+}
+
+div.errortext,
+div.warningtext,
+div.successtext {
+	position: relative;
+	margin: 1rem 0;
+	padding: 0.5rem 1rem;
+	justify-content: flex-start;
+	align-items: center;
+	border-radius: 4px;
+	width: 100%;
+	height: auto;
+	display: none;
+	transition: all 0.2s ease-in-out;
+}
+
+div.errortext.active,
+div.warningtext.active,
+div.successtext.active {
+	display: flex;
+}
+
+div.errortext p.errormsg,
+div.warningtext p.warningmsg,
+div.successtext p.successmsg {
+	margin: 0;
+	width: 90%;
+	font: 400 1.8rem/1.4 var(--mainfont);
+	text-align: left;
+	letter-spacing: 0.2px;
+}
+
+div.errortext i.closeBtn,
+div.warningtext i.closeBtn,
+div.successtext i.closeBtn {
+	position: absolute;
+	right: 0.5rem;
+	height: 2.6rem;
+	width: 2.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2.2rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+}
+
+div.errortext.active i.closeBtn:hover,
+div.warningtext.active i.closeBtn:hover,
+div.successtext.active i.closeBtn:hover {
+	filter: brightness(0.95);
+}
+
+/* Color Grade */
+
+div.errortext.active {
+	background: #fee2e2; /* 100 */
+	border: 2px solid #fecaca; /* 200 */
+}
+div.errortext.active p.errormsg {
+	color: #b91c1c; /* 700 */
+}
+div.errortext.active i.closeBtn {
+	color: #b91c1c; /* 700 */
+	background: #fecaca; /* 200 */
+	border: 1.8px solid #fca5a5; /* 300 */
+}
+
+div.warningtext.active {
+	background: #fef9c3; /* 100 */
+	border: 2px solid #fef08a; /* 200 */
+}
+div.warningtext.active p.warningmsg {
+	color: #a16207; /* 700 */
+}
+div.warningtext.active i.closeBtn {
+	color: #a16207; /* 700 */
+	background: #fef08a; /* 200 */
+	border: 2px solid #fde047; /* 300 */
+}
+
+div.successtext.active {
+	background: #dcfce7; /* 100 */
+	border: 2px solid #bbf7d0; /* 200 */
+}
+div.successtext.active p.successmsg {
+	color: #166534; /* 700 */
+}
+div.successtext.active i.closeBtn {
+	color: #15803d; /* 700 */
+	background: #bbf7d0; /* 200 */
+	border: 2px solid #86efac; /* 300 */
 }

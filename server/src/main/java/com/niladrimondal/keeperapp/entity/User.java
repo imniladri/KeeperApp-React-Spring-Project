@@ -3,6 +3,7 @@ package com.niladrimondal.keeperapp.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "DIARYLOGS_USER")
@@ -29,6 +30,9 @@ public class User {
 	@Column(name = "DOB", nullable = false)
 	@Temporal(TemporalType.DATE)
 	private LocalDate dob;
+	
+	@Column(name = "TIMESTAMP", nullable = false)
+	private LocalDateTime timestamp;
 
 	public Integer getUserid() {
 		return userid;
@@ -76,6 +80,14 @@ public class User {
 
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
+	}
+	
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override

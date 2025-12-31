@@ -9,10 +9,14 @@ import { entryObj } from "../utils/entry";
 import "../styles/newEntry.css";
 
 export default function NewEntry() {
+	const headerProps = {
+		auth: [{ link: "/entries", text: "Entries" }],
+		noAuth: [{ link: "/login", text: "Login" }],
+	};
+
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
-
 	const [entryData, setEntryData] = useState(entryObj);
 
 	const [validationError, setValidationError] = useState({
@@ -75,10 +79,9 @@ export default function NewEntry() {
 	// Server Function
 	const saveEntry = async (data) => {
 		try {
-			console.log(data);
-			const response = await axios.post(`${API_URL}/api/newentry`, data);
+			const response = await axios.post(`${API_URL}/api/entry/new`, data);
 			// console.log("Response:", response);
-            navigate("/entries");
+			navigate("/entries");
 			return response.data;
 		} catch (error) {
 			console.error("Error:", error);
@@ -87,12 +90,12 @@ export default function NewEntry() {
 
 	return (
 		<>
-			<Header user={user} linkUrl="/" linkText="Home" />
+			<Header user={user} headerProps={headerProps} />
 
-			<section id="entries" className="newEntry">
-				<div className="entries_banner">
+			<section id="newEntry" className="newEntry">
+				<div className="newEntry_banner">
 					<form onSubmit={formSubmitAction}>
-						<div className="entries_header">
+						<div className="newEntry_header">
 							<h2>
 								<span>Entry</span> Name
 							</h2>
@@ -108,10 +111,11 @@ export default function NewEntry() {
 							</button>
 						</div>
 
-						<div className="entry_input">
+						<div className="newEntry_input">
 							<label htmlFor="entry">
 								Enter your topic name below:
 							</label>
+
 							<div
 								className={
 									validationError.active
@@ -119,7 +123,7 @@ export default function NewEntry() {
 										: "errortext"
 								}
 							>
-								<p>{validationError.message}</p>
+								<p className="errormsg">{validationError.message}</p>
 								<i
 									className="bx bx-x closeBtn"
 									onClick={() => {
@@ -130,6 +134,7 @@ export default function NewEntry() {
 									}}
 								></i>
 							</div>
+
 							<input
 								type="text"
 								id="entry"
@@ -149,6 +154,8 @@ export default function NewEntry() {
 					</form>
 				</div>
 			</section>
+
+			<div className="bg-pattern"></div>
 		</>
 	);
 }

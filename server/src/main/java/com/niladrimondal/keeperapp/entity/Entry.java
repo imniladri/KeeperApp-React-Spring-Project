@@ -57,7 +57,7 @@ public class Entry {
 		return "Entry [entryId=" + entryId + ", entry=" + entry + ", timestamp=" + timestamp + ", user=" + user + "]";
 	}
 
-	// Mapping (User-Booking)
+	// Mapping (User-Entry)
 
 	@ManyToOne
 	@JoinColumn(name = "USERID")

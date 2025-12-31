@@ -22,7 +22,7 @@ public class UserController {
 		return "Login";
 	}
 
-	@PostMapping("/login")
+	@PostMapping("/user/login")
 	public User getUserLogin(@RequestBody Map<String, Object> payLoadData) {
 		String loginUsername = (String) payLoadData.get("username");
 		String loginPassword = (String) payLoadData.get("password");
@@ -41,20 +41,20 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 
-	@GetMapping("/validate/username/{username}")
+	@GetMapping("/user/validate/username/{username}")
 	public boolean getUserByUserName(@PathVariable("username") String username) {
 		return userService.validateUsername(username);
 	}
 	
-	@GetMapping("/validate/email/{email}")
+	@GetMapping("/user/validate/email/{email}")
 	public boolean getUserByEmail(@PathVariable("email") String email) {
 		return userService.validateEmail(email);
 	}
 
-	@PostMapping("/register/user")
-	public boolean registerUser(@RequestBody User user) {
+	@PostMapping("/user/register")
+	public User registerUser(@RequestBody User user) {
 		user.setUserid(0);
-		return userService.saveUser(user) != null;
+		return userService.saveUser(user);
 	}
 
 }

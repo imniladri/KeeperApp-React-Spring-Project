@@ -1,4 +1,4 @@
-#entries {
+#newEntry {
     margin: 8rem auto;
     position: relative;
     width: 100%;
@@ -9,17 +9,7 @@
     z-index: 1;
 }
 
-div.bg-pattern {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: var(--primarywhite) url(../img/line-pattern.svg);
-    z-index: -1;
-}
-
-section.newEntry div.entries_banner {
+section.newEntry div.newEntry_banner {
     position: relative;
     margin: 6rem auto;
     padding: 2rem;
@@ -30,13 +20,13 @@ section.newEntry div.entries_banner {
     border-radius: 4px;
 }
 
-section.newEntry div.entries_banner form {
+section.newEntry div.newEntry_banner form {
     position: relative;
     margin: 1rem auto;
     z-index: 1;
 }
 
-section.newEntry div.entries_banner form .entries_header {
+section.newEntry div.newEntry_banner form .newEntry_header {
     position: relative;
     margin: auto;
     padding: 0.5rem 0;
@@ -45,7 +35,7 @@ section.newEntry div.entries_banner form .entries_header {
     align-items: center;
 }
 
-section.newEntry div.entries_banner form .entries_header h2 {
+section.newEntry div.newEntry_banner form .newEntry_header h2 {
     margin: 1rem 0;
     font: 450 3.5rem/0.8 var(--mainfont);
     color: var(--secondarycolor);
@@ -53,12 +43,12 @@ section.newEntry div.entries_banner form .entries_header h2 {
     text-align: left;
 }
 
-section.newEntry div.entries_banner form .entries_header h2 span {
+section.newEntry div.newEntry_banner form .newEntry_header h2 span {
     font-weight: 500;
     color: var(--primaryblack);
 }
 
-section.newEntry div.entries_banner form .entries_header button {
+section.newEntry div.newEntry_banner form .newEntry_header button {
     margin: 1rem 0;
     padding: 1rem 2rem;
     color: var(--primarywhite);
@@ -72,33 +62,33 @@ section.newEntry div.entries_banner form .entries_header button {
     transition: all 0.2s ease-in-out;
 }
 
-section.newEntry div.entries_banner form .entries_header button:hover {
+section.newEntry div.newEntry_banner form .newEntry_header button:hover {
     color: var(--primaryblack);
     background: var(--primarycolor);
 }
 
-section.newEntry div.entries_banner form .entries_header button:focus,
-section.newEntry div.entries_banner form .entries_header button:active {
+section.newEntry div.newEntry_banner form .newEntry_header button:focus,
+section.newEntry div.newEntry_banner form .newEntry_header button:active {
     color: var(--primaryblack);
     background: rgba(240, 197, 43, 1);
 }
 
-section.newEntry div.entries_banner form .entries_header button span {
+section.newEntry div.newEntry_banner form .newEntry_header button span {
     font: 450 1.6rem var(--mainfont);
 }
-section.newEntry div.entries_banner form .entries_header button svg {
+section.newEntry div.newEntry_banner form .newEntry_header button svg {
     width: 2.2rem;
     height: 2.2rem;
 }
 
-section.newEntry div.entries_banner form .entry_input label {
+section.newEntry div.newEntry_banner form .newEntry_input label {
     margin: 1rem 0;
     font: 450 2.2rem/1.2 var(--mainfont);
     color: var(--primaryblack);
     text-align: left;
 }
 
-section.newEntry div.entries_banner form .entry_input input {
+section.newEntry div.newEntry_banner form .newEntry_input input {
     display: block;
     width: 100%;
     margin: 1rem 0;
@@ -115,86 +105,33 @@ section.newEntry div.entries_banner form .entry_input input {
     transition: all 0.2s ease-in-out;
 }
 
-section.newEntry div.entries_banner form .entry_input input::placeholder {
+section.newEntry div.newEntry_banner form .newEntry_input input::placeholder {
     color: rgba(0, 0, 0, 0.4);
 }
 
-section.newEntry div.entries_banner form .entry_input input:focus {
+section.newEntry div.newEntry_banner form .newEntry_input input:focus {
     border: 2.5px solid rgba(4, 194, 127, 0.65);
 }
 
 /* **************************** Responsive Medias **************************** */
 
 @media (max-width: 576px) {
-    section.newEntry div.entries_banner {
+    section.newEntry div.newEntry_banner {
         padding: 2rem 1rem;
     }
-    section.newEntry div.entries_banner form .entries_header {
+    section.newEntry div.newEntry_banner form .newEntry_header {
         flex-wrap: wrap;
     }
-    section.newEntry div.entries_banner form .entries_header h2 {
+    section.newEntry div.newEntry_banner form .newEntry_header h2 {
         font-size: 3.5rem;
     }
-    section.newEntry div.entries_banner form .entries_header button span {
+    section.newEntry div.newEntry_banner form .newEntry_header button span {
         display: none;
     }
 }
 
 @media (min-width: 576px) {
-    section.newEntry div.entries_banner form .entries_header button svg {
+    section.newEntry div.newEntry_banner form .newEntry_header button svg {
         display: none;
     }
 }
-
-
-
-section.newEntry div.entries_banner form .entry_input .errortext {
-    position: relative;
-    margin: 1rem 0;
-    padding: 0.5rem 1rem;
-    justify-content: flex-start;
-    align-items: center;
-    background: rgba(255, 0, 51, 0.05);
-    border: 2px solid rgba(255, 0, 51, 0.1);
-    border-radius: 4px;
-    width: 100%;
-    height: auto;
-
-    display: none;
-    transition: all 0.2s ease-in-out;
-}
-
-section.newEntry div.entries_banner form .entry_input .errortext.active {
-    display: flex;
-}
-
-section.newEntry div.entries_banner form .entry_input .errortext p {
-    margin: 0;
-    width: 90%;
-    font: 400 1.8rem/1.4 var(--mainfont);
-    color: rgba(175, 0, 35, 1);
-    text-align: left;
-    letter-spacing: 0.2px;
-}
-
-section.newEntry div.entries_banner form .entry_input .errortext i.closeBtn {
-    position: absolute;
-    right: 0.5rem;
-    height: 2.6rem;
-    width: 2.6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.2rem;
-    color: rgba(175, 0, 35, 1);
-    background: rgba(255, 0, 51, 0.05);
-    border: 1.8px solid rgba(255, 0, 51, 0.1);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-}
-
-section.newEntry div.entries_banner form .entry_input .errortext i.closeBtn:hover {
-    background: rgba(255, 0, 51, 0.1);
-}
-

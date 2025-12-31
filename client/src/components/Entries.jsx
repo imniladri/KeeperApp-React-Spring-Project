@@ -8,6 +8,11 @@ import API_URL from "../utils/API_URL";
 import "../styles/entries.css";
 
 export default function Entries() {
+	const headerProps = {
+		auth: [{ link: "/", text: "Home" }],
+		noAuth: [{ link: "/login", text: "Login" }],
+	};
+
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
@@ -32,9 +37,11 @@ export default function Entries() {
 	}, []);
 
 	// Server Function
-	const getUserEntries = async (data) => {
+	const getUserEntries = async (username) => {
 		try {
-			const response = await axios.get(`${API_URL}/api/entries/${data}`);
+			const response = await axios.get(
+				`${API_URL}/api/entry/user/${username}`
+			);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
@@ -44,14 +51,17 @@ export default function Entries() {
 
 	return (
 		<>
-			<Header user={user} linkUrl="/" linkText="Home" />
+			<Header user={user} headerProps={headerProps} />
 
 			<section id="entries">
 				<div className="entries_banner">
 					{userEntires.length === 0 ? (
 						<EntriesEmpty />
 					) : (
-						<EntriesNotEmpty user={user} userEntires={userEntires} />
+						<EntriesNotEmpty
+							user={user}
+							userEntires={userEntires}
+						/>
 					)}
 				</div>
 			</section>
@@ -64,10 +74,18 @@ export default function Entries() {
 function EntriesEmpty() {
 	return (
 		<>
-			<Link to="/newentry" className="entries_empty">
-				<img src="/img/empty-folder.svg" alt="Empty" />
-				<p>No topics have been added yet.</p>
-			</Link>
+			<div className="entries_header">
+				<h2>
+					Your Daily <span>Entries</span>
+				</h2>
+			</div>
+
+			<div className="entries_body">
+				<Link to="/new/entry" className="entries_empty">
+					<img src="/img/empty-folder.svg" alt="Empty" />
+					<p>No new entries have been added yet.</p>
+				</Link>
+			</div>
 		</>
 	);
 }
@@ -79,7 +97,7 @@ function EntriesNotEmpty(props) {
 				<h2>
 					Your Daily <span>Entries</span>
 				</h2>
-				<Link to="/newentry">
+				<Link to="/new/entry">
 					<span>Add New Entry</span>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -93,9 +111,22 @@ function EntriesNotEmpty(props) {
 
 			<div className="entries_body">
 				{props.userEntires.map((entry) => (
-					<Link key={entry.entryId} to={`/${props.user.username}/entry/${entry.entryId}`}>
+					<Link
+						key={entry.entryId}
+						to={`/${props.user.username}/entry/${entry.entryId}`}
+						className="entries_content"
+					>
 						<h3>{entry.entry}</h3>
-						<p>{entry.timestamp}</p>
+						<p>
+							{new Date(entry.timestamp).toLocaleDateString(
+								"en-US",
+								{
+									month: "short",
+									day: "numeric",
+									year: "numeric",
+								}
+							)}
+						</p>
 					</Link>
 				))}
 			</div>

@@ -9,16 +9,6 @@
 	z-index: 1;
 }
 
-div.bg-pattern {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background: var(--primarywhite) url(../img/bg-pattern.svg);
-	z-index: -1;
-}
-
 div.authentication {
 	position: relative;
 	margin: 5rem auto 1rem;
@@ -101,85 +91,6 @@ div.authentication form button:focus,
 div.authentication form button:active {
 	background: var(--primaryblack);
 	transform: translateY(-2px);
-}
-
-div.authentication .errortext,
-div.authentication .successtext {
-	position: relative;
-	margin: 1rem 0;
-	padding: 0.5rem 1rem;
-	justify-content: flex-start;
-	align-items: center;
-	border-radius: 4px;
-	width: 100%;
-	height: auto;
-
-	display: none;
-	transition: all 0.2s ease-in-out;
-}
-
-div.authentication .errortext.active {
-	display: flex;
-	background: rgba(255, 0, 51, 0.05);
-	border: 2px solid rgba(255, 0, 51, 0.1);
-}
-
-div.authentication .successtext.active {
-	display: flex;
-	background: rgba(21, 252, 106, 0.3);
-	border: 2px solid rgba(34, 197, 94, 0.2);
-}
-
-div.authentication .errortext p,
-div.authentication .successtext p {
-	margin: 0;
-	width: 90%;
-	font: 400 1.8rem/1.4 var(--mainfont);
-	text-align: left;
-	letter-spacing: 0.2px;
-}
-
-div.authentication .errortext.active p {
-	color: rgba(175, 0, 35, 1);
-}
-
-div.authentication .successtext.active p {
-	color: rgb(5, 56, 23, 1);
-}
-
-div.authentication .errortext i.closeBtn,
-div.authentication .successtext i.closeBtn {
-	position: absolute;
-	right: 0.5rem;
-	height: 2.6rem;
-	width: 2.6rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2.2rem;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: all 0.1s ease-in-out;
-}
-
-div.authentication .errortext.active i.closeBtn {
-	color: rgba(175, 0, 35, 1);
-	background: rgba(255, 0, 51, 0.05);
-	border: 1.8px solid rgba(255, 0, 51, 0.1);
-}
-
-div.authentication .successtext.active i.closeBtn {
-	color: rgb(5, 56, 23, 1);
-	background: rgba(21, 252, 106, 0.3);
-	border: 2px solid rgba(34, 197, 94, 0.2);
-}
-
-div.authentication .errortext.active i.closeBtn:hover {
-	background: rgba(255, 0, 51, 0.1);
-}
-
-div.authentication .sucesstext.active i.closeBtn:hover {
-	background: rgba(34, 197, 94, 0.2);
 }
 
 div.authentication hr {

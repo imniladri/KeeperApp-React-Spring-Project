@@ -9,16 +9,6 @@
 	z-index: 1;
 }
 
-div.bg-pattern {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background: var(--primarywhite) url(../img/line-pattern.svg);
-	z-index: -1;
-}
-
 div.entries_banner {
 	position: relative;
 	margin: 6rem auto;
@@ -97,7 +87,7 @@ div.entries_banner .entries_body {
 	padding: auto;
 }
 
-div.entries_banner .entries_empty {
+div.entries_banner .entries_body a.entries_empty {
 	padding: 4rem;
 	text-decoration: none;
 	display: flex;
@@ -109,18 +99,18 @@ div.entries_banner .entries_empty {
 	transition: all 0.15s ease-in-out;
 }
 
-div.entries_banner .entries_empty:hover {
+div.entries_banner .entries_body a.entries_empty:hover {
 	filter: brightness(97%);
 }
 
-div.entries_banner .entries_empty img {
+div.entries_banner .entries_body a.entries_empty img {
 	margin: 1rem 0;
 	width: 6rem;
 	height: auto;
 	opacity: 0.1;
 }
 
-div.entries_banner .entries_empty p {
+div.entries_banner .entries_body a.entries_empty p {
 	display: block;
 	margin: 1rem 0;
 	font: 450 2.5rem/1.4 var(--mainfont);
@@ -129,7 +119,7 @@ div.entries_banner .entries_empty p {
 	text-align: center;
 }
 
-div.entries_banner .entries_body a {
+div.entries_banner .entries_body a.entries_content {
 	position: relative;
 	display: block;
 	margin: 1rem auto;
@@ -145,15 +135,16 @@ div.entries_banner .entries_body a {
 	transition: all 0.2s ease-in-out;
 }
 
-div.entries_banner .entries_body a h3 {
+div.entries_banner .entries_body a.entries_content h3 {
 	font: 450 2.5rem/1.4 var(--mainfont);
 }
 
-div.entries_banner .entries_body a p {
-	font: 400 1rem/1.4 var(--mainfont);
+div.entries_banner .entries_body a.entries_content p {
+    margin-bottom: 0.5rem;
+	font: 400 1.5rem var(--mainfont);
 }
 
-div.entries_banner .entries_body a::before {
+div.entries_banner .entries_body a.entries_content::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -164,12 +155,12 @@ div.entries_banner .entries_body a::before {
 	transition: all 0.15s ease-in-out;
 }
 
-div.entries_banner .entries_body li a:active,
-div.entries_banner .entries_body li a:hover {
+div.entries_banner .entries_body li a.entries_content:active,
+div.entries_banner .entries_body li a.entries_content:hover {
 	background: rgba(1, 43, 81, 0.08);
 }
-div.entries_banner .entries_body li a:active:before,
-div.entries_banner .entries_body li a:hover:before {
+div.entries_banner .entries_body li a.entries_content:active:before,
+div.entries_banner .entries_body li a.entries_content:hover:before {
 	width: 8px;
 }
 

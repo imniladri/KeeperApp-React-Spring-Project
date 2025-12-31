@@ -1,0 +1,197 @@
+#newEntryDetail {
+    margin: 8rem auto;
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+section.newEntryDetail div.newEntryDetail_banner {
+    position: relative;
+    margin: 6rem auto;
+    padding: 2rem;
+    width: 80%;
+    height: auto;
+    background: var(--primarywhite);
+    border: 2px solid #e2e8f0;
+    border-radius: 4px;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form {
+    position: relative;
+    margin: 1rem auto;
+    z-index: 1;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header {
+    position: relative;
+    margin: auto;
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2 {
+    position: relative;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    color: var(--secondarycolor);
+    background: rgba(4, 194, 127, 0.08);
+    border-radius: 4px;
+    user-select: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2 a {
+    font: 450 3rem/1.2 var(--mainfont);
+    color: var(--secondarycolor);
+    letter-spacing: -0.4px;
+    text-align: left;
+    text-decoration: none;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.3rem;
+    border-radius: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.3s ease-in-out;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2:active:after,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2:hover:after {
+    transform: scaleX(1);
+    transform-origin: left center;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button {
+    margin: 1rem 0;
+    padding: 1rem 2rem;
+    color: var(--primarywhite);
+    background: var(--primaryblack);
+    border-radius: 10rem;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:hover {
+    color: var(--primaryblack);
+    background: var(--primarycolor);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:focus,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:active {
+    color: var(--primaryblack);
+    background: rgba(240, 197, 43, 1);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button span {
+    font: 450 1.6rem var(--mainfont);
+}
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button svg {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input .inputFields {
+    display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input label {
+    margin: 1rem 0;
+    font: 450 2rem/1.2 var(--mainfont);
+    color: var(--primaryblack);
+    text-align: left;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input .inputFields label.charCounter {
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    background: var(--primarygrey);
+    border-radius: 2rem;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input .inputFields label.charCounter.warning {
+    background: var(--primarycolor);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input label span {
+    font-weight: 500;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input input,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea {
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem 1.5rem;
+    font: 400 2rem/1.4 var(--mainfont);
+    color: var(--primaryblack);
+    background: rgba(4, 194, 127, 0.05);
+    border: 2.5px solid rgba(4, 194, 127, 0.45);
+    border-radius: 6px;
+    text-align: left;
+    letter-spacing: 0.2px;
+    box-shadow: none;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input input::placeholder,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input input:focus,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea:focus {
+    border: 2.5px solid rgba(4, 194, 127, 0.65);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background: transparent;
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea::-webkit-scrollbar-thumb {
+    background: rgba(1, 43, 81, 0.6);
+    border-radius: 3px;
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 576px) {
+    section.newEntryDetail div.newEntryDetail_banner {
+        padding: 2rem 1rem;
+    }
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header {
+        flex-wrap: wrap;
+    }
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2 {
+        font-size: 3.5rem;
+    }
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button span {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button svg {
+        display: none;
+    }
+}

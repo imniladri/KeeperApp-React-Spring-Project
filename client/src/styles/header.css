@@ -48,7 +48,7 @@ header#header nav .nav-items {
 
 header#header nav .nav-items .nav-btn {
 	margin: auto 0.5rem;
-	padding: 0.8rem 2rem;
+	padding: 0.6rem 1.5rem;
 	font-size: 1.8rem;
 	font-weight: 450;
 	color: var(--primaryblack);
@@ -68,6 +68,7 @@ header#header nav .nav-items .nav-btn {
 
 header#header nav .nav-items .nav-btn.icon-btn {
 	padding: 0.8rem;
+    border-radius: 50%;
 }
 
 header#header nav .nav-items .nav-btn i {
@@ -75,7 +76,6 @@ header#header nav .nav-items .nav-btn i {
 }
 
 header#header nav .nav-items button.nav-btn {
-	padding: 0.8rem 2rem;
 	color: var(--primarywhite);
 	background: var(--dangercolor);
 }

@@ -9,6 +9,14 @@ import { userObj } from "../utils/user";
 import "../styles/auth.css";
 
 export default function Register() {
+	const headerProps = {
+		auth: [{ link: "/", text: "Home" }],
+		noAuth: [
+			{ link: "/login", text: "Login" },
+			{ link: "/", text: "Home" },
+		],
+	};
+
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
@@ -49,9 +57,15 @@ export default function Register() {
 	// Form Submit Function
 	const formSubmitAction = (event) => {
 		event.preventDefault();
+
+		const payload = {
+			...registerUserData,
+			timestamp: new Date().toISOString(),
+		};
+
 		const validationCheck = handleRegister();
 		if (validationCheck) {
-			registerUser(registerUserData);
+			registerUser(payload);
 		}
 	};
 
@@ -101,13 +115,23 @@ export default function Register() {
 	const registerUser = async (data) => {
 		try {
 			const isEmailExist = await axios.get(
-				`${API_URL}/api/validate/email/${encodeURIComponent(
-					data.email
-				)}`
+				`${API_URL}/api/user/validate/email/${data.email}`
 			);
 			const isUsernameExist = await axios.get(
-				`${API_URL}/api/validate/username/${data.username}`
+				`${API_URL}/api/user/validate/username/${data.username}`
 			);
+
+			if (
+				isEmailExist.data.status === 400 ||
+				isUsernameExist.data.status === 400
+			) {
+				setValidationError({
+					message: "Internal Server Error. Please try again later.",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+				return;
+			}
 
 			if (isEmailExist.data) {
 				setValidationError({
@@ -115,7 +139,7 @@ export default function Register() {
 					active: true,
 				});
 				window.scrollTo(0, 0);
-				return false;
+				return;
 			}
 			if (isUsernameExist.data) {
 				setValidationError({
@@ -123,15 +147,18 @@ export default function Register() {
 					active: true,
 				});
 				window.scrollTo(0, 0);
-				return false;
+				return;
 			}
 
 			const response = await axios.post(
-				`${API_URL}/api/register/user`,
+				`${API_URL}/api/user/register`,
 				data
 			);
 			// console.log("Response:", response);
-			if (response.data) {
+			if (
+				response.data.username === registerUserData.username &&
+				response.data !== null
+			) {
 				setValidationSuccess({
 					message: "Registration Successful! Redirecting to Login...",
 					active: true,
@@ -140,14 +167,21 @@ export default function Register() {
 				setTimeout(() => {
 					navigate("/login");
 				}, 3000);
+			} else if (response.data.status === 400) {
+				setValidationError({
+					message: "Internal Server Error. Please try again later.",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+				return;
 			} else {
 				setValidationError({
 					message: "Registration Failed! Please try again.",
 					active: true,
 				});
 				window.scrollTo(0, 0);
+				return;
 			}
-			// return response.data;
 		} catch (error) {
 			console.error("Error:", error);
 		}
@@ -155,7 +189,7 @@ export default function Register() {
 
 	return (
 		<>
-			<Header user={user} linkUrl="/" linkText="Home" />
+			<Header user={user} headerProps={headerProps} />
 
 			<section id="authentication">
 				<div className="authentication">
@@ -170,7 +204,7 @@ export default function Register() {
 								: "errortext"
 						}
 					>
-						<p>{validationError.message}</p>
+						<p className="errormsg">{validationError.message}</p>
 						<i
 							className="bx bx-x closeBtn"
 							onClick={() => {
@@ -189,7 +223,7 @@ export default function Register() {
 								: "successtext"
 						}
 					>
-						<p>{validationSuccess.message}</p>
+						<p className="successmsg">{validationSuccess.message}</p>
 						<i
 							className="bx bx-x closeBtn"
 							onClick={() => {
@@ -256,6 +290,14 @@ export default function Register() {
 								onChange={inputOnChange}
 							/>
 						</div>
+
+						<input
+							type="hidden"
+							id="timestamp"
+							name="timestamp"
+							value={registerUserData.timestamp}
+							readOnly
+						/>
 
 						<button type="submit">Register Now</button>
 					</form>
