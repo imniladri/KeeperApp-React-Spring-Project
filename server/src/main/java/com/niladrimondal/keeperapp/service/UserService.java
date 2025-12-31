@@ -2,6 +2,8 @@ package com.niladrimondal.keeperapp.service;
 
 import com.niladrimondal.keeperapp.entity.User;
 import com.niladrimondal.keeperapp.repository.UserRepository;
+
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class UserService {
 
 	public User saveUser(User user) {
 		if (user != null) {
+			// Password Hashing
+			String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+			user.setPassword(hashedPassword);
 			return userRepository.save(user);
 		} else {
 			return new User();
@@ -48,7 +53,8 @@ public class UserService {
 		User user = userRepository.findByUsername(username);
 
 		if (user != null) {
-			return user.getPassword().equals(password);
+			return BCrypt.checkpw(password, user.getPassword()); // Authenticate With Password Hashing
+//			return user.getPassword().equals(password); // Authenticate Without Password Hashing
 		} else {
 			return false;
 		}
