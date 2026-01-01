@@ -91,8 +91,8 @@ div.entryDetails_banner .entryDetails_header a svg {
 }
 
 div.entryDetails_banner .entryDetails_body {
-	margin: 3rem 0;
-	padding: auto;
+	margin: 2rem 0;
+	padding: 0;
 }
 
 div.entryDetails_banner .entryDetails_body .entryDetails_empty {
@@ -128,8 +128,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_empty p {
 }
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content {
-	margin: auto;
-	margin-bottom: 3rem;
+	margin:  1.5rem auto;
 	background: var(--primarywhite);
 	border: 2px solid rgba(1, 43, 81, 0.1);
 	border-radius: 4px;
@@ -191,12 +190,22 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 	transition: all 0.2s ease-in-out;
 }
 
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn {
-    color: #ef4444;
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn {
+    position: relative;
+	margin: 0.5rem;
+	padding: 0.6rem 0.8rem;
+	color: #ef4444;
     background: rgba(255, 59, 48, 0.1);
+	text-decoration: none;
+	border-radius: 4px;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
 }
 
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a::after {
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a::after,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn::after {
 	content: "";
 	position: absolute;
 	bottom: 0;
@@ -214,12 +223,14 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:hover {
 	background: rgba(4, 194, 127, 0.08);
 }
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn:active,
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a.deleteBtn:hover {
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn:active,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn:hover {
 	background: rgba(255, 59, 48, 0.08);
 }
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:active:after,
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:hover:after {
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:hover:after,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn:active:after,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn:hover:after {
 	transform: scaleX(1);
 	transform-origin: left center;
 }
@@ -228,7 +239,8 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 	font: 450 1.8rem/1.4 var(--mainfont);
 	letter-spacing: 0.4px;
 }
-div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a svg {
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a svg,
+div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn svg {
 	width: 2.4rem;
 	height: 2.4rem;
 }
@@ -262,7 +274,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 
 @media (min-width: 576px) {
 	div.entryDetails_banner .entryDetails_header a svg,
-	div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a:not(.deleteBtn) svg {
+	div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a svg {
 		display: none;
 	}
 }

@@ -1,0 +1,103 @@
+section.modalOverlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.15s ease-in-out;
+}
+
+section.modalOverlay.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+section.modalOverlay div.modalBox {
+	margin: auto;
+	padding: 2.5rem;
+	width: 100%;
+	max-width: 50rem;
+	font-family: var(--mainfont);
+	background: var(--primarywhite);
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+	transform: translateY(-2rem) scale(0.95);
+	transition: all 0.15s ease-in-out;
+}
+
+section.modalOverlay.active div.modalBox {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+section.modalOverlay div.modalBox h3.modalHead {
+	position: relative;
+	margin: 1rem 0;
+	font-size: 2.6rem;
+	font-weight: 450;
+	color: var(--primaryblack);
+	text-align: left;
+	letter-spacing: -0.2px;
+}
+
+section.modalOverlay div.modalBox p.modalPara {
+	margin: 0.5rem 0;
+	font-size: 1.7rem;
+	font-weight: 400;
+	color: var(--primaryblack);
+	text-align: left;
+	line-height: 1.4;
+}
+
+section.modalOverlay .modalActions {
+	margin-top: 3rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 1rem;
+}
+
+section.modalOverlay .modalActions button.btn.cancel {
+	position: relative;
+    margin: 0;
+	padding: 0.8rem 1.4rem;
+	font-size: 1.6rem;
+	font-weight: 450;
+	border: none;
+	cursor: pointer;
+	border-radius: 6px;
+	transition: all 0.1s ease-in-out;
+	background: var(--primarygrey);
+	color: var(--primaryblack);
+}
+
+section.modalOverlay .modalActions button.btn.cancel:hover {
+	filter: brightness(0.9);
+	background: var(--primarygrey);
+	color: var(--primaryblack);
+}
+
+section.modalOverlay .modalActions button.btn.confirm {
+	position: relative;
+    margin: 0;
+	padding: 0.8rem 1.4rem;
+	font-size: 1.6rem;
+	font-weight: 450;
+	border: none;
+	cursor: pointer;
+	border-radius: 6px;
+	transition: all 0.1s ease-in-out;
+	background: var(--dangercolor);
+	color: var(--primarywhite);
+}
+
+section.modalOverlay .modalActions button.btn.confirm:hover {
+	filter: brightness(0.9);
+	background: var(--dangercolor);
+	color: var(--primarywhite);
+}

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
 
 import API_URL from "../utils/API_URL";
 import { entryObj } from "../utils/entry";
@@ -25,7 +25,7 @@ export default function NewEntry() {
 	});
 
 	useEffect(() => {
-		document.title = "New Entry | DairyLogs";
+		document.title = "New Entry | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {

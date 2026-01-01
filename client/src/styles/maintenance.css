@@ -1,0 +1,72 @@
+div.maintenance-banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+div.maintenance-banner img {
+    margin: 1rem auto;
+    width: 35rem;
+    height: auto;
+}
+
+div.maintenance-banner h2 {
+    margin: 0.5rem 0;
+    font-size: 4rem;
+    font-weight: 450;
+    line-height: 1.2;
+    color: var(--primaryblack);
+    letter-spacing: -0.4px;
+    text-align: center;
+}
+
+div.maintenance-banner h2 span {
+    font-weight: 600;
+}
+
+div.maintenance-banner p {
+    margin: 0.5rem 0 1rem;
+    font-size: 3rem;
+    font-weight: 450;
+    line-height: 1;
+    color: var(--primaryblack);
+    letter-spacing: 0.8px;
+    text-align: center;
+}
+
+div.maintenance-banner a {
+    position: relative;
+    margin: 1rem 0;
+    padding: 1rem 3.5rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--primarywhite);
+    background: var(--primaryblack);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* **************************** Responsive Medias **************************** */
+
+@media (max-width: 576px) {
+    div.maintenance-banner {
+        margin: 7rem auto;
+        padding: 2rem 0;
+    }
+    div.maintenance-banner img {
+        width: 80%;
+    }
+    div.maintenance-banner h2 {
+        font-size: 3.5rem;
+    }
+    div.maintenance-banner p {
+        font-size: 2.5rem;
+    }
+}

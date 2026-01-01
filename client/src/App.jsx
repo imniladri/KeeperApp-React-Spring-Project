@@ -9,7 +9,8 @@ import Entries from "./components/Entries";
 import NewEntry from "./components/NewEntry";
 import EntryDetails from "./components/EntryDetails";
 import NewEntryDetail from "./components/NewEntryDetail";
-import Error from "./components/Error";
+import Error from "./helpers/ErrorPage";
+import MaintenanceMode from "./helpers/MaintenancePage";
 
 export default function App() {
 	return (
@@ -32,6 +33,7 @@ export default function App() {
 					path="/:username/entry/:entryId/edit/:entryDetailId"
 					element={<NewEntryDetail />}
 				/>
+				<Route path="/maintenance" element={<MaintenanceMode />} />
 				<Route path="*" element={<Error />} />
 			</Routes>
 		</>

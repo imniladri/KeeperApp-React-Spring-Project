@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
 
 import API_URL from "../utils/API_URL";
 import "../styles/entries.css";
@@ -19,7 +19,7 @@ export default function Entries() {
 	const [userEntires, setUserEntires] = useState([]);
 
 	useEffect(() => {
-		document.title = "Your Daily Entries | DairyLogs";
+		document.title = "All Entries | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {

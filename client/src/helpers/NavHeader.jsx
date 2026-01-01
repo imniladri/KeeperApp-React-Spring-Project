@@ -9,7 +9,7 @@ export default function Header(props) {
 				<div className="nav-brand">
 					<Link to="/">
 						<img src="/img/logo-light.svg" alt="Logo" />
-						<span>DairyLogs</span>
+						<span>DiaryLogs</span>
 					</Link>
 				</div>
 
@@ -53,7 +53,7 @@ function HeaderUserAuthorised(props) {
 
 	return (
 		<>
-			<Link to="/dashboard" className="nav-btn icon-btn">
+			<Link to="/maintenance" className="nav-btn icon-btn"> {/* /dashboard */}
 				<i className="bx bxs-user"></i>
 			</Link>
 

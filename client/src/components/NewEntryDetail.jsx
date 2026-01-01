@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
+import ConfirmModal from "../helpers/ConfirmModal";
 
 import API_URL from "../utils/API_URL";
 import { entryDetailObj } from "../utils/entryDetail";
@@ -29,6 +30,8 @@ export default function NewEntryDetail() {
 	const [user, setUser] = useState(null);
 	const [entryData, setEntryData] = useState(null);
 	const [entryDetailData, setEntryDetailData] = useState(entryDetailObj);
+	const [deleting, setDeleting] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 	const [validationError, setValidationError] = useState({
 		message: "",
@@ -42,8 +45,8 @@ export default function NewEntryDetail() {
 
 	useEffect(() => {
 		document.title = isEditMode
-			? "Edit Entry Detail | DairyLogs"
-			: "New Entry Detail | DairyLogs";
+			? "Edit Entry Detail | DiaryLogs"
+			: "New Entry Detail | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {
@@ -95,11 +98,13 @@ export default function NewEntryDetail() {
 
 	// Create Entry Details Logic Function
 	const createEntryDetail = () => {
+		const currentDate = new Date().toISOString();
+
 		const payload = {
 			...entryDetailData,
 			entry: entryData,
-			createTimestamp: new Date().toISOString(),
-			updateTimestamp: new Date().toISOString(),
+			createTimestamp: currentDate,
+			updateTimestamp: currentDate,
 		};
 
 		const validationCheck = handleEntryDetailsValidation();
@@ -174,6 +179,26 @@ export default function NewEntryDetail() {
 	};
 
 	// Server Function
+	const deleteEntryDetail = async () => {
+		setDeleting(true);
+
+		try {
+			const response = await axios.delete(
+				`${API_URL}/api/entry/delete/detail/${entryDetailId}`
+			);
+
+			if (response.data === true) {
+				navigate(`/${username}/entry/${entryId}`);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		} finally {
+			setDeleting(false);
+			setShowDeleteModal(false);
+		}
+	};
+
+	// Server Function
 	const getEntryData = async (entryId) => {
 		try {
 			const response = await axios.get(
@@ -212,20 +237,59 @@ export default function NewEntryDetail() {
 									{entryData ? entryData.entry : "Loading..."}
 								</Link>
 							</h2>
-							<button type="submit" name="submit">
-								<span>
-									{isEditMode
-										? "Update Entry Detail"
-										: "Save Entry Detail"}
-								</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 448 512"
-									fill="currentColor"
-								>
-									<path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM339.8 211.8C350.7 200.9 350.7 183.1 339.8 172.2C328.9 161.3 311.1 161.3 300.2 172.2L192 280.4L147.8 236.2C136.9 225.3 119.1 225.3 108.2 236.2C97.27 247.1 97.27 264.9 108.2 275.8L172.2 339.8C183.1 350.7 200.9 350.7 211.8 339.8L339.8 211.8z" />
-								</svg>
-							</button>
+
+							<div className="actionButtons">
+								<button type="submit" name="submit">
+									<span>
+										{isEditMode
+											? "Update Entry Detail"
+											: "Save Entry Detail"}
+									</span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 448 512"
+										fill="currentColor"
+									>
+										<path d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM339.8 211.8C350.7 200.9 350.7 183.1 339.8 172.2C328.9 161.3 311.1 161.3 300.2 172.2L192 280.4L147.8 236.2C136.9 225.3 119.1 225.3 108.2 236.2C97.27 247.1 97.27 264.9 108.2 275.8L172.2 339.8C183.1 350.7 200.9 350.7 211.8 339.8L339.8 211.8z" />
+									</svg>
+								</button>
+
+								{isEditMode && (
+									<>
+										<button
+											type="button"
+											className="deleteBtn"
+											onClick={() =>
+												setShowDeleteModal(true)
+											}
+											disabled={deleting}
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 640 640"
+												fill="currentColor"
+											>
+												<path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
+											</svg>
+										</button>
+
+										<ConfirmModal
+											isActive={showDeleteModal}
+											title="Delete Entry Detail"
+											message="This action cannot be undone. Are you sure you want to delete this entry detail?"
+											confirmText={
+												deleting
+													? "Deleting..."
+													: "Delete"
+											}
+											onConfirm={deleteEntryDetail}
+											onCancel={() =>
+												setShowDeleteModal(false)
+											}
+										/>
+									</>
+								)}
+							</div>
 						</div>
 
 						<div className="newEntryDetail_input">

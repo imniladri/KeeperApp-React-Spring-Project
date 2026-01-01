@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
 
 import API_URL from "../utils/API_URL";
 import "../styles/entryDetails.css";
@@ -21,8 +21,13 @@ export default function EntryDetails() {
 
 	const { username, entryId } = useParams();
 
+	const [validationSuccess, setValidationSuccess] = useState({
+		message: "",
+		active: false,
+	});
+
 	useEffect(() => {
-		document.title = "Entry | DairyLogs";
+		document.title = "All Entry Details | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {
@@ -72,6 +77,29 @@ export default function EntryDetails() {
 		}
 	};
 
+	// Server Function
+	const handleDeleteEntryDetail = async (entryDetailId) => {
+		try {
+			const response = await axios.delete(
+				`${API_URL}/api/entry/delete/detail/${entryDetailId}`
+			);
+
+			if (response.data === true) {
+				// Remove deleted item from state (NO page reload)
+				setEntryDetails((prev) =>
+					prev.filter((d) => d.entryDetailId !== entryDetailId)
+				);
+				setValidationSuccess({
+					message: "Entry Detail Deleted Successfully!",
+					active: true,
+				});
+				window.scrollTo(0, 0);
+			}
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
 	return (
 		<>
 			<Header user={user} headerProps={headerProps} />
@@ -90,6 +118,9 @@ export default function EntryDetails() {
 							entryId={entryId}
 							entryData={entryData}
 							entryDetails={entryDetails}
+							onDelete={handleDeleteEntryDetail}
+							validationSuccess={validationSuccess}
+							setValidationSuccess={setValidationSuccess}
 						/>
 					)}
 				</div>
@@ -123,52 +154,17 @@ function EntryDetailsEmpty({ username, entryId, entryData }) {
 	);
 }
 
-function EntryDetailsNotEmpty({ username, entryId, entryData, entryDetails }) {
-	// const [validationSuccess, setValidationSuccess] = useState({
-	// 	message: "",
-	// 	active: false,
-	// });
-
-	// Server Function
-	// const handleDelete = async (entryDetailId) => {
-	// 	try {
-	// 		const response = await axios.delete(
-	// 			`${API_URL}/api/entry/delete/detail/${entryDetailId}`
-	// 		);
-	// 		if (response.data === true) {
-	// 			setValidationSuccess({
-	// 				message: "Entry Detail Deleted Successfully!",
-	// 				active: true,
-	// 			});
-	// 			window.scrollTo(0, 0);
-	// 			window.location.reload();
-	// 		}
-	// 	} catch (error) {
-	// 		console.error("Error:", error);
-	// 	}
-	// };
-
+function EntryDetailsNotEmpty({
+	username,
+	entryId,
+	entryData,
+	entryDetails,
+	onDelete,
+	validationSuccess,
+	setValidationSuccess,
+}) {
 	return (
 		<>
-			{/* <div
-				className={
-					validationSuccess.active
-						? "successtext active"
-						: "successtext"
-				}
-			>
-				<p className="successmsg">{validationSuccess.message}</p>
-				<i
-					className="bx bx-x closeBtn"
-					onClick={() => {
-						setValidationSuccess({
-							message: "",
-							active: false,
-						});
-					}}
-				></i>
-			</div> */}
-
 			<div className="entryDetails_header">
 				<h2>
 					<span>Entry</span>
@@ -185,6 +181,25 @@ function EntryDetailsNotEmpty({ username, entryId, entryData, entryDetails }) {
 						<path d="M0 64C0 28.65 28.65 0 64 0H224V128C224 145.7 238.3 160 256 160H384V198.6C310.1 219.5 256 287.4 256 368C256 427.1 285.1 479.3 329.7 511.3C326.6 511.7 323.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM256 128V0L384 128H256zM288 368C288 288.5 352.5 224 432 224C511.5 224 576 288.5 576 368C576 447.5 511.5 512 432 512C352.5 512 288 447.5 288 368zM448 303.1C448 295.2 440.8 287.1 432 287.1C423.2 287.1 416 295.2 416 303.1V351.1H368C359.2 351.1 352 359.2 352 367.1C352 376.8 359.2 383.1 368 383.1H416V431.1C416 440.8 423.2 447.1 432 447.1C440.8 447.1 448 440.8 448 431.1V383.1H496C504.8 383.1 512 376.8 512 367.1C512 359.2 504.8 351.1 496 351.1H448V303.1z" />
 					</svg>
 				</Link>
+			</div>
+
+			<div
+				className={
+					validationSuccess.active
+						? "successtext active"
+						: "successtext"
+				}
+			>
+				<p className="successmsg">{validationSuccess.message}</p>
+				<i
+					className="bx bx-x closeBtn"
+					onClick={() => {
+						setValidationSuccess({
+							message: "",
+							active: false,
+						});
+					}}
+				></i>
 			</div>
 
 			<div className="entryDetails_body">
@@ -245,10 +260,12 @@ function EntryDetailsNotEmpty({ username, entryId, entryData, entryDetails }) {
 									</svg>
 								</Link>
 
-								<Link
-									to={`/${username}/entry/${entryId}`}
+								<button
+									type="button"
 									className="deleteBtn"
-									// onClick={handleDelete(detail.entryDetailId)}
+									onClick={() =>
+										onDelete(detail.entryDetailId)
+									}
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -257,7 +274,7 @@ function EntryDetailsNotEmpty({ username, entryId, entryData, entryDetails }) {
 									>
 										<path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z" />
 									</svg>
-								</Link>
+								</button>
 							</div>
 						</div>
 						<div className="card-body">

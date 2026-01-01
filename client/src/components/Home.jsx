@@ -3,7 +3,7 @@ import "../styles/home.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
 
 export default function Home() {
 	const headerProps = {
@@ -14,7 +14,7 @@ export default function Home() {
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		document.title = "Dairy Logs";
+		document.title = "Diary Logs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {

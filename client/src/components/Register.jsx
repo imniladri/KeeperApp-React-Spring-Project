@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Header from "./Header";
+import Header from "../helpers/NavHeader";
 
 import API_URL from "../utils/API_URL";
 import { userObj } from "../utils/user";
@@ -22,7 +22,7 @@ export default function Register() {
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		document.title = "Registration | DairyLogs";
+		document.title = "Registration | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
 		if (user) {

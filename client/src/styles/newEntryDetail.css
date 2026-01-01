@@ -74,6 +74,12 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header h2:
     transform-origin: left center;
 }
 
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header .actionButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button {
     margin: 1rem 0;
     padding: 1rem 2rem;
@@ -87,6 +93,20 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header but
     transition: all 0.2s ease-in-out;
 }
 
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button.deleteBtn {
+    position: relative;
+	margin: 0.5rem;
+	padding: 1rem;
+	color: #ef4444;
+    background: rgba(255, 59, 48, 0.2) !important;
+	text-decoration: none;
+	border-radius: 2rem;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
+}
+
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:hover {
     color: var(--primaryblack);
     background: var(--primarycolor);
@@ -96,6 +116,12 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header but
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:active {
     color: var(--primaryblack);
     background: rgba(240, 197, 43, 1);
+}
+
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button.deleteBtn:active,
+section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button.deleteBtn:hover {
+	color: #ef4444;
+    background: rgba(255, 59, 48, 0.3) !important;
 }
 
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button span {
@@ -191,7 +217,7 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input text
 }
 
 @media (min-width: 576px) {
-    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button svg {
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button:not(.deleteBtn) svg {
         display: none;
     }
 }
