@@ -98,6 +98,17 @@ export default API_URL;
 
 ---
 
+## 🗄️ Database Schema
+
+The application uses a **relational database design** implemented with **MySQL / PostgreSQL** and managed using **Spring Data JPA & Hibernate**.
+
+<img width="500" alt="schema-keeperapp" src="https://github.com/user-attachments/assets/947211ed-64ec-4440-96d8-ce438ddb325d" />
+
+> ⚠️ **Note:**  
+> The schema may evolve as new features such as dashboard, categorization, enhanced editor and security enhancements are added.
+
+---
+
 ## 🔄 API Overview
 
 | Method | Endpoint        | Description        |
