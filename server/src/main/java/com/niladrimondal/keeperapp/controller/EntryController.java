@@ -48,6 +48,11 @@ public class EntryController {
 		return entryService.updateEntryDetails(entryDetailId, updatedEntryDetails);
 	}
 	
+	@DeleteMapping("/entry/delete/{entryId}")
+	public boolean deleteEntry(@PathVariable("entryId") Integer entryId) {
+		return entryService.deleteEntry(entryId);
+	}
+	
 	@DeleteMapping("/entry/delete/detail/{entryDetailId}")
 	public boolean deleteEntryDetails(@PathVariable("entryDetailId") Integer entryDetailId) {
 		return entryService.deleteEntryDetails(entryDetailId);

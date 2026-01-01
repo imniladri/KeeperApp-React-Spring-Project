@@ -2,6 +2,9 @@ package com.niladrimondal.keeperapp.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -71,10 +74,11 @@ public class EntryDetails {
 				+ createTimestamp + ", updateTimestamp=" + updateTimestamp + ", entry=" + entry + "]";
 	}
 
-	// Mapping (Entry-EntryDetails)
-
+	// Mapping (EntryDetails-Entry)
+	
 	@ManyToOne
-	@JoinColumn(name = "ENTRYID")
+	@JoinColumn(name = "ENTRYID", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Entry entry;
 
 	public Entry getEntry() {

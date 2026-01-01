@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niladrimondal.keeperapp.entity.Entry;
 import com.niladrimondal.keeperapp.entity.EntryDetails;
@@ -45,9 +46,19 @@ public class EntryService {
 		return entryDetailsRepository.save(existingDetails);
 	}
 	
+	@Transactional
 	public boolean deleteEntryDetails(Integer id) {
 		if (entryDetailsRepository.existsById(id)) {
 			entryDetailsRepository.deleteById(id);
+			return true;
+		}
+		return false;
+	}
+	
+	@Transactional
+	public boolean deleteEntry(Integer id) {
+		if (entryRepository.existsById(id)) {
+			entryRepository.deleteById(id);
 			return true;
 		}
 		return false;

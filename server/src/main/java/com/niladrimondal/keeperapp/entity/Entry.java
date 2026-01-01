@@ -1,7 +1,13 @@
 package com.niladrimondal.keeperapp.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -51,16 +58,17 @@ public class Entry {
 	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Entry [entryId=" + entryId + ", entry=" + entry + ", timestamp=" + timestamp + ", user=" + user + "]";
 	}
 
-	// Mapping (User-Entry)
+	// Mapping (Entry-User)
 
 	@ManyToOne
-	@JoinColumn(name = "USERID")
+	@JoinColumn(name = "USERID", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
 
 	public User getUser() {
@@ -70,5 +78,10 @@ public class Entry {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	// Mapping (Entry-EntryDetails)
+	
+	@OneToMany(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<EntryDetails> entryDetails = new ArrayList<>();
 
 }
