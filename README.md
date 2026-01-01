@@ -68,6 +68,7 @@ KeeperApp is not a direct clone but a **conceptual evolution**, adapting the Lea
 * Node.js (v16+ recommended)
 * npm or yarn
 * Java 17+
+* Maven
 * Spring Boot backend running
 
 ### Frontend Setup
@@ -77,13 +78,16 @@ KeeperApp is not a direct clone but a **conceptual evolution**, adapting the Lea
 git clone https://github.com/imniladri/KeeperApp-React-Spring-Project.git
 
 # Navigate to project directory
-cd KeeperApp-React-Spring-Project
+cd KeeperApp-React-Spring-Project/client
 
 # Install dependencies
 npm install
 
 # Start the development server
-npm start
+npm start or npm run dev
+
+# Application will be available at:
+http://localhost:8080
 ```
 
 ### Backend Setup
@@ -94,6 +98,26 @@ Ensure the Spring Boot backend is running and the API base URL is correctly conf
 // src/utils/API_URL.js
 const API_URL = "http://localhost:8080/api";
 export default API_URL;
+```
+
+```bash
+# Clone the repository
+git clone https://github.com/imniladri/KeeperApp-React-Spring-Project.git
+
+# Navigate to project directory
+cd KeeperApp-React-Spring-Project/server
+
+# Build the project
+mvn clean install
+
+# Run the application spring boot server
+mvn spring-boot:run
+
+_Or run the JAR file after building:_
+java -jar target/keeperapp-0.0.1-SNAPSHOT.jar
+
+# Application will be available at:
+http://localhost:8090
 ```
 
 ---
