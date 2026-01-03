@@ -20,10 +20,15 @@ export default function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/entries" element={<Entries />} />
-				<Route path="/new/entry" element={<NewEntry />} />
+				<Route path="/:username/entry" element={<Entries />} />
 				<Route
 					path="/:username/entry/:entryId"
 					element={<EntryDetails />}
+				/>
+				<Route path="/:username/entry/new" element={<NewEntry />} />
+				<Route
+					path="/:username/entry/edit/:entryId"
+					element={<NewEntry />}
 				/>
 				<Route
 					path="/:username/entry/:entryId/new"

@@ -83,8 +83,8 @@ div.entries_banner .entries_header a svg {
 }
 
 div.entries_banner .entries_body {
-	margin: 3rem 0;
-	padding: auto;
+	margin: 2rem 0;
+	padding: 0;
 }
 
 div.entries_banner .entries_body a.entries_empty {
@@ -119,32 +119,20 @@ div.entries_banner .entries_body a.entries_empty p {
 	text-align: center;
 }
 
-div.entries_banner .entries_body a.entries_content {
+div.entries_banner .entries_body .entries_content {
 	position: relative;
-	display: block;
-	margin: 1rem auto;
+	margin: 1.5rem auto;
 	padding: 1rem;
-	padding-left: 2rem;
-	color: var(--primaryblack);
-	text-align: left;
-	text-decoration: none;
-	letter-spacing: 0.2px;
-	list-style: none;
+	padding-left: 2.5rem;
 	border-radius: 0 4px 4px 0;
 	background: rgba(1, 43, 81, 0.05);
 	transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-div.entries_banner .entries_body a.entries_content h3 {
-	font: 450 2.5rem/1.4 var(--mainfont);
-}
-
-div.entries_banner .entries_body a.entries_content p {
-    margin-bottom: 0.5rem;
-	font: 400 1.5rem var(--mainfont);
-}
-
-div.entries_banner .entries_body a.entries_content::before {
+div.entries_banner .entries_body .entries_content::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -155,13 +143,117 @@ div.entries_banner .entries_body a.entries_content::before {
 	transition: all 0.15s ease-in-out;
 }
 
-div.entries_banner .entries_body li a.entries_content:active,
-div.entries_banner .entries_body li a.entries_content:hover {
+div.entries_banner .entries_body .entries_content:active,
+div.entries_banner .entries_body .entries_content:hover {
 	background: rgba(1, 43, 81, 0.08);
 }
-div.entries_banner .entries_body li a.entries_content:active:before,
-div.entries_banner .entries_body li a.entries_content:hover:before {
+div.entries_banner .entries_body .entries_content:active:before,
+div.entries_banner .entries_body .entries_content:hover:before {
 	width: 8px;
+}
+
+div.entries_banner .entries_body .entries_content a.viewBtn {
+	position: relative;
+	color: var(--primaryblack);
+	text-align: left;
+	text-decoration: none;
+	letter-spacing: 0.2px;
+	list-style: none;
+    width: 100%;
+}
+
+div.entries_banner .entries_body .entries_content a.viewBtn h3 {
+	font: 450 2.5rem/1.4 var(--mainfont);
+}
+
+div.entries_banner .entries_body .entries_content a.viewBtn p {
+    margin-bottom: 0.5rem;
+	font: 450 1.5rem var(--mainfont);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+div.entries_banner .entries_body .entries_content a.viewBtn p span {
+    margin: 0 0.5rem 0;
+	padding: 0.5rem;
+	font: 700 8px var(--mainfont);
+	color: var(--primaryblack);
+	background: var(--primarygrey);
+	letter-spacing: 1px;
+	text-align: center;
+	text-transform: uppercase;
+	width: fit-content;
+	border-radius: 0 1rem 1rem 0;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn {
+	position: relative;
+	margin: 0.5rem;
+	padding: 0.8rem;
+	color: var(--secondarycolor);
+	background: rgba(4, 194, 127, 0.1);
+	text-decoration: none;
+	border-radius: 4px;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn {
+    position: relative;
+	margin: 0.5rem;
+	padding: 0.8rem;
+	color: var(--dangercolor);
+    background: rgba(255, 59, 48, 0.1);
+	text-decoration: none;
+	border-radius: 4px;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn::after,
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2.5px;
+	border-radius: 2px;
+	background: currentColor;
+	transform: scaleX(0);
+	transform-origin: right center;
+	transition: transform 0.3s ease-in-out;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:active,
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:hover {
+	background: rgba(4, 194, 127, 0.08);
+}
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:active,
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:hover {
+	background: rgba(255, 59, 48, 0.08);
+}
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:active:after,
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:hover:after,
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:active:after,
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:hover:after {
+	transform: scaleX(1);
+	transform-origin: left center;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons a.editBtn svg,
+div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn svg {
+	width: 2.4rem;
+	height: 2.4rem;
 }
 
 /* **************************** Responsive Medias **************************** */

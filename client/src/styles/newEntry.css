@@ -48,18 +48,38 @@ section.newEntry div.newEntry_banner form .newEntry_header h2 span {
     color: var(--primaryblack);
 }
 
+section.newEntry div.newEntry_banner form .newEntry_header .actionButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 section.newEntry div.newEntry_banner form .newEntry_header button {
     margin: 1rem 0;
     padding: 1rem 2rem;
     color: var(--primarywhite);
     background: var(--primaryblack);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
     border-radius: 10rem;
     text-align: center;
     text-decoration: none;
     outline: none;
     border: none;
     transition: all 0.2s ease-in-out;
+}
+
+
+section.newEntry div.newEntry_banner form .newEntry_header button.deleteBtn {
+    position: relative;
+	margin: 0.5rem;
+	padding: 1rem;
+	color: #ef4444;
+    background: rgba(255, 59, 48, 0.2) !important;
+	text-decoration: none;
+	border-radius: 2rem;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
 }
 
 section.newEntry div.newEntry_banner form .newEntry_header button:hover {
@@ -73,6 +93,12 @@ section.newEntry div.newEntry_banner form .newEntry_header button:active {
     background: rgba(240, 197, 43, 1);
 }
 
+section.newEntry div.newEntry_banner form .newEntry_header button.deleteBtn:active,
+section.newEntry div.newEntry_banner form .newEntry_header button.deleteBtn:hover {
+	color: #ef4444;
+    background: rgba(255, 59, 48, 0.3) !important;
+}
+
 section.newEntry div.newEntry_banner form .newEntry_header button span {
     font: 450 1.6rem var(--mainfont);
 }
@@ -81,11 +107,28 @@ section.newEntry div.newEntry_banner form .newEntry_header button svg {
     height: 2.2rem;
 }
 
+section.newEntry div.newEntry_banner form .newEntry_input .inputFields {
+    display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 section.newEntry div.newEntry_banner form .newEntry_input label {
     margin: 1rem 0;
     font: 450 2.2rem/1.2 var(--mainfont);
     color: var(--primaryblack);
     text-align: left;
+}
+
+section.newEntry div.newEntry_banner form .newEntry_input .inputFields label.charCounter {
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    background: var(--primarygrey);
+    border-radius: 2rem;
+}
+
+section.newEntry div.newEntry_banner form .newEntry_input .inputFields label.charCounter.warning {
+    background: var(--primarycolor);
 }
 
 section.newEntry div.newEntry_banner form .newEntry_input input {
@@ -131,7 +174,7 @@ section.newEntry div.newEntry_banner form .newEntry_input input:focus {
 }
 
 @media (min-width: 576px) {
-    section.newEntry div.newEntry_banner form .newEntry_header button svg {
+    section.newEntry div.newEntry_banner form .newEntry_header button:not(.deleteBtn) svg {
         display: none;
     }
 }

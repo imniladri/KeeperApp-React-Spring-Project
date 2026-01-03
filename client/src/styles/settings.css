@@ -73,6 +73,11 @@ a.btn:focus {
 	box-shadow: none;
 }
 
+button:disabled,
+button[disabled] {
+	opacity: 0.6;
+}
+
 div.bg-pattern {
 	position: fixed;
 	top: 0;
@@ -183,4 +188,67 @@ div.successtext.active i.closeBtn {
 	color: #15803d; /* 700 */
 	background: #bbf7d0; /* 200 */
 	border: 2px solid #86efac; /* 300 */
+}
+
+div.loading_skeleton {
+	position: relative;
+	margin: auto;
+	padding: 4rem 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background: var(--primarywhite);
+	border: 2px dashed var(--primarygrey);
+	border-radius: 1rem;
+	z-index: 1;
+	transition: all 0.15s ease-in-out;
+}
+
+div.loading_skeleton::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: var(--primarygrey);
+	animation: shimmer 1.5s ease-in-out infinite;
+	z-index: -1;
+}
+
+div.loading_skeleton svg.loading_skeleton_icon {
+	margin: 1rem auto;
+	width: 6rem;
+	height: auto;
+	color: var(--primarygrey);
+	z-index: 2;
+	animation: spinner 3s linear infinite;
+}
+
+div.loading_skeleton h4.loading_skeleton_text {
+	font: 450 3.5rem var(--mainfont);
+	color: var(--primarygrey);
+	letter-spacing: 0.2px;
+	text-align: center;
+	z-index: 2;
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		opacity: 0.2;
+	}
+	50% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 0.2;
+	}
 }

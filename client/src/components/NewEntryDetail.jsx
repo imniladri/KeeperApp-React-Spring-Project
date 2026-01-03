@@ -10,6 +10,7 @@ import { entryDetailObj } from "../utils/entryDetail";
 import "../styles/newEntryDetail.css";
 
 export default function NewEntryDetail() {
+	const navigate = useNavigate();
 	const { username, entryId, entryDetailId } = useParams();
 	const isEditMode = Boolean(entryDetailId);
 	const MAX_LENGTH = 10000;
@@ -25,13 +26,11 @@ export default function NewEntryDetail() {
 		noAuth: [{ link: "/login", text: "Login" }],
 	};
 
-	const navigate = useNavigate();
-
 	const [user, setUser] = useState(null);
 	const [entryData, setEntryData] = useState(null);
 	const [entryDetailData, setEntryDetailData] = useState(entryDetailObj);
-	const [deleting, setDeleting] = useState(false);
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [actionInProgress, setActionInProgress] = useState(false);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
 
 	const [validationError, setValidationError] = useState({
 		message: "",
@@ -44,33 +43,55 @@ export default function NewEntryDetail() {
 	});
 
 	useEffect(() => {
+		if (!validationError.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationError({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationError.active]);
+
+	useEffect(() => {
+		if (!validationWarning.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationWarning({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationWarning.active]);
+
+	useEffect(() => {
 		document.title = isEditMode
 			? "Edit Entry Detail | DiaryLogs"
 			: "New Entry Detail | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
-		if (user) {
-			setUser(user);
 
-			if (isEditMode) {
-				const fetchEntryDetailData = async () => {
-					const data = await getEntryDetailData(entryDetailId);
-					setEntryDetailData(data || null);
-				};
+		if (!user) {
+			navigate("/login");
+			return;
+		}
 
-				fetchEntryDetailData();
-			}
+		setUser(user);
 
-			const fetchEntryData = async () => {
-				const data = await getEntryData(entryId);
-				setEntryData(data || null);
+		if (isEditMode && entryDetailId) {
+			const fetchEntryDetailData = async () => {
+				const data = await getEntryDetailData(entryDetailId);
+				setEntryDetailData(data || null);
 			};
 
-			fetchEntryData();
-		} else {
-			navigate("/login");
+			fetchEntryDetailData();
 		}
-	}, []);
+
+		const fetchEntryData = async () => {
+			const data = await getEntryData(entryId);
+			setEntryData(data || null);
+		};
+
+		fetchEntryData();
+	}, [isEditMode, entryDetailId, entryId, navigate]);
 
 	// Input Field Update Function
 	const inputOnChange = (event) => {
@@ -150,6 +171,8 @@ export default function NewEntryDetail() {
 
 	// Server Function
 	const saveEntryDetail = async (data) => {
+		setActionInProgress(true);
+
 		try {
 			const response = await axios.post(
 				`${API_URL}/api/entry/new/detail`,
@@ -160,11 +183,15 @@ export default function NewEntryDetail() {
 			return response.data;
 		} catch (error) {
 			console.error("Error:", error);
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
 	// Server Function
 	const updateEntryDetail = async (data) => {
+		setActionInProgress(true);
+
 		try {
 			const response = await axios.put(
 				`${API_URL}/api/entry/edit/detail/${entryDetailId}`,
@@ -175,12 +202,14 @@ export default function NewEntryDetail() {
 			return response.data;
 		} catch (error) {
 			console.error("Error:", error);
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
 	// Server Function
 	const deleteEntryDetail = async () => {
-		setDeleting(true);
+		setActionInProgress(true);
 
 		try {
 			const response = await axios.delete(
@@ -189,12 +218,18 @@ export default function NewEntryDetail() {
 
 			if (response.data === true) {
 				navigate(`/${username}/entry/${entryId}`);
+			} else {
+				setValidationError({
+					message: "Error Deleting Entry Detail. Please Try Again!",
+					active: true,
+				});
+				window.scrollTo(0, 0);
 			}
 		} catch (error) {
 			console.error("Error:", error);
 		} finally {
-			setDeleting(false);
-			setShowDeleteModal(false);
+			setActionInProgress(false);
+			setShowConfirmModal(false);
 		}
 	};
 
@@ -239,10 +274,18 @@ export default function NewEntryDetail() {
 							</h2>
 
 							<div className="actionButtons">
-								<button type="submit" name="submit">
+								<button
+									type="submit"
+									name="submit"
+									disabled={actionInProgress}
+								>
 									<span>
 										{isEditMode
-											? "Update Entry Detail"
+											? actionInProgress
+												? "Updating..."
+												: "Update Entry Detail"
+											: actionInProgress
+											? "Saving..."
 											: "Save Entry Detail"}
 									</span>
 									<svg
@@ -260,9 +303,9 @@ export default function NewEntryDetail() {
 											type="button"
 											className="deleteBtn"
 											onClick={() =>
-												setShowDeleteModal(true)
+												setShowConfirmModal(true)
 											}
-											disabled={deleting}
+											disabled={actionInProgress}
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -274,17 +317,17 @@ export default function NewEntryDetail() {
 										</button>
 
 										<ConfirmModal
-											isActive={showDeleteModal}
+											isActive={showConfirmModal}
 											title="Delete Entry Detail"
 											message="This action cannot be undone. Are you sure you want to delete this entry detail?"
 											confirmText={
-												deleting
+												actionInProgress
 													? "Deleting..."
 													: "Delete"
 											}
 											onConfirm={deleteEntryDetail}
 											onCancel={() =>
-												setShowDeleteModal(false)
+												setShowConfirmModal(false)
 											}
 										/>
 									</>

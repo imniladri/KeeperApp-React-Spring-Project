@@ -32,8 +32,11 @@ public class Entry {
 	@Column(name = "ENTRY", nullable = false)
 	private String entry;
 
-	@Column(name = "TIMESTAMP", nullable = false)
-	private LocalDateTime timestamp;
+	@Column(name = "CREATE_TS", nullable = false)
+	private LocalDateTime createTimestamp;
+
+	@Column(name = "UPDATE_TS")
+	private LocalDateTime updateTimestamp;
 
 	public Integer getEntryId() {
 		return entryId;
@@ -51,17 +54,26 @@ public class Entry {
 		this.entry = entry;
 	}
 
-	public LocalDateTime getTimestamp() {
-		return timestamp;
+	public LocalDateTime getCreateTimestamp() {
+		return createTimestamp;
 	}
 
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
+	public void setCreateTimestamp(LocalDateTime createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	public LocalDateTime getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(LocalDateTime updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
 	}
 
 	@Override
 	public String toString() {
-		return "Entry [entryId=" + entryId + ", entry=" + entry + ", timestamp=" + timestamp + ", user=" + user + "]";
+		return "Entry [entryId=" + entryId + ", entry=" + entry + ", createTimestamp=" + createTimestamp
+				+ ", updateTimestamp=" + updateTimestamp + ", user=" + user + "]";
 	}
 
 	// Mapping (Entry-User)
@@ -80,7 +92,7 @@ public class Entry {
 	}
 
 	// Mapping (Entry-EntryDetails)
-	
+
 	@OneToMany(mappedBy = "entry", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EntryDetails> entryDetails = new ArrayList<>();
 

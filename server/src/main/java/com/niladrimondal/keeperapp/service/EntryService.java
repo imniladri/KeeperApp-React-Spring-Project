@@ -27,6 +27,16 @@ public class EntryService {
 			return new Entry();
 		}
 	}
+	
+	public Entry updateEntry(Integer id, Entry updatedDetails) {
+		Entry existingDetails = entryRepository.findById(id).get();
+		
+		existingDetails.setEntry(updatedDetails.getEntry());
+		existingDetails.setCreateTimestamp(updatedDetails.getCreateTimestamp());
+		existingDetails.setUpdateTimestamp(updatedDetails.getUpdateTimestamp());
+		
+		return entryRepository.save(existingDetails);
+	}
 
 	public EntryDetails saveEntryDetails(EntryDetails entryDetails) {
 		if (entryDetails != null) {

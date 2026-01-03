@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
+import ConfirmModal from "../helpers/ConfirmModal";
+import LoadingSkeleton from "../helpers/LoadingSkeleton";
 
 import API_URL from "../utils/API_URL";
 import "../styles/entryDetails.css";
@@ -18,6 +20,10 @@ export default function EntryDetails() {
 	const [user, setUser] = useState(null);
 	const [entryData, setEntryData] = useState(null);
 	const [entryDetails, setEntryDetails] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [actionInProgress, setActionInProgress] = useState(false);
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	const [selectedEntryDetailId, setSelectedEntryDetailId] = useState(null);
 
 	const { username, entryId } = useParams();
 
@@ -26,30 +32,61 @@ export default function EntryDetails() {
 		active: false,
 	});
 
+	const [validationError, setValidationError] = useState({
+		message: "",
+		active: false,
+	});
+
+	useEffect(() => {
+		if (!validationSuccess.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationSuccess({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationSuccess.active]);
+
+	useEffect(() => {
+		if (!validationError.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationError({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationError.active]);
+
 	useEffect(() => {
 		document.title = "All Entry Details | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
-		if (user) {
-			setUser(user);
 
-			const fetchEntryData = async () => {
-				const data = await getEntryData(entryId);
-				setEntryData(data || null);
-			};
+		if (!user) {
+			navigate("/login");
+			return;
+		}
 
-			fetchEntryData();
+		setUser(user);
 
-			const fetchEntryDetails = async () => {
+		const fetchEntryData = async () => {
+			const data = await getEntryData(entryId);
+			setEntryData(data || null);
+		};
+
+		fetchEntryData();
+
+		const fetchEntryDetails = async () => {
+			try {
 				const data = await getEntryDetails(entryId);
 				setEntryDetails(data || []);
-			};
+			} finally {
+				setIsLoading(false);
+			}
+		};
 
-			fetchEntryDetails();
-		} else {
-			navigate("/login");
-		}
-	}, []);
+		fetchEntryDetails();
+	}, [entryId, navigate]);
 
 	// Server Function
 	const getEntryData = async (entryId) => {
@@ -79,6 +116,8 @@ export default function EntryDetails() {
 
 	// Server Function
 	const handleDeleteEntryDetail = async (entryDetailId) => {
+		setActionInProgress(true);
+
 		try {
 			const response = await axios.delete(
 				`${API_URL}/api/entry/delete/detail/${entryDetailId}`
@@ -94,9 +133,18 @@ export default function EntryDetails() {
 					active: true,
 				});
 				window.scrollTo(0, 0);
+			} else {
+				setValidationError({
+					message: "Error Deleting Entry. Please Try Again!",
+					active: true,
+				});
+				window.scrollTo(0, 0);
 			}
 		} catch (error) {
 			console.error("Error:", error);
+		} finally {
+			setActionInProgress(false);
+			setShowConfirmModal(false);
 		}
 	};
 
@@ -111,6 +159,7 @@ export default function EntryDetails() {
 							username={username}
 							entryId={entryId}
 							entryData={entryData}
+							isLoading={isLoading}
 						/>
 					) : (
 						<EntryDetailsNotEmpty
@@ -121,6 +170,13 @@ export default function EntryDetails() {
 							onDelete={handleDeleteEntryDetail}
 							validationSuccess={validationSuccess}
 							setValidationSuccess={setValidationSuccess}
+							validationError={validationError}
+							setValidationError={setValidationError}
+							actionInProgress={actionInProgress}
+							showConfirmModal={showConfirmModal}
+							setShowConfirmModal={setShowConfirmModal}
+							selectedEntryDetailId={selectedEntryDetailId}
+							setSelectedEntryDetailId={setSelectedEntryDetailId}
 						/>
 					)}
 				</div>
@@ -131,7 +187,7 @@ export default function EntryDetails() {
 	);
 }
 
-function EntryDetailsEmpty({ username, entryId, entryData }) {
+function EntryDetailsEmpty({ username, entryId, entryData, isLoading }) {
 	return (
 		<>
 			<div className="entryDetails_header">
@@ -142,13 +198,17 @@ function EntryDetailsEmpty({ username, entryId, entryData }) {
 			</div>
 
 			<div className="entryDetails_body">
-				<Link
-					to={`/${username}/entry/${entryId}/new`}
-					className="entryDetails_empty"
-				>
-					<img src="/img/empty-folder.svg" alt="Empty" />
-					<p>No details have been added yet for this Entry.</p>
-				</Link>
+				{isLoading ? (
+					<LoadingSkeleton />
+				) : (
+					<Link
+						to={`/${username}/entry/${entryId}/new`}
+						className="entryDetails_empty"
+					>
+						<img src="/img/empty-folder.svg" alt="Empty" />
+						<p>No details have been added yet for this Entry.</p>
+					</Link>
+				)}
 			</div>
 		</>
 	);
@@ -162,6 +222,13 @@ function EntryDetailsNotEmpty({
 	onDelete,
 	validationSuccess,
 	setValidationSuccess,
+	validationError,
+	setValidationError,
+	actionInProgress,
+	showConfirmModal,
+	setShowConfirmModal,
+	selectedEntryDetailId,
+	setSelectedEntryDetailId,
 }) {
 	return (
 		<>
@@ -195,6 +262,23 @@ function EntryDetailsNotEmpty({
 					className="bx bx-x closeBtn"
 					onClick={() => {
 						setValidationSuccess({
+							message: "",
+							active: false,
+						});
+					}}
+				></i>
+			</div>
+
+			<div
+				className={
+					validationError.active ? "errortext active" : "errortext"
+				}
+			>
+				<p className="errormsg">{validationError.message}</p>
+				<i
+					className="bx bx-x closeBtn"
+					onClick={() => {
+						setValidationError({
 							message: "",
 							active: false,
 						});
@@ -250,7 +334,7 @@ function EntryDetailsNotEmpty({
 								<Link
 									to={`/${username}/entry/${entryId}/edit/${detail.entryDetailId}`}
 								>
-									<span>Edit Entry</span>
+									<span>Edit Entry Detail</span>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 512 512"
@@ -263,9 +347,13 @@ function EntryDetailsNotEmpty({
 								<button
 									type="button"
 									className="deleteBtn"
-									onClick={() =>
-										onDelete(detail.entryDetailId)
-									}
+									onClick={() => {
+										setSelectedEntryDetailId(
+											detail.entryDetailId
+										);
+										setShowConfirmModal(true);
+									}}
+									disabled={actionInProgress}
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -283,6 +371,15 @@ function EntryDetailsNotEmpty({
 					</div>
 				))}
 			</div>
+
+			<ConfirmModal
+				isActive={showConfirmModal}
+				title="Delete Entry Detail"
+				message="This action cannot be undone. Are you sure you want to delete this entry detail?"
+				confirmText={actionInProgress ? "Deleting..." : "Delete"}
+				onConfirm={() => onDelete(selectedEntryDetailId)}
+				onCancel={() => setShowConfirmModal(false)}
+			/>
 		</>
 	);
 }

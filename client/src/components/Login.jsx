@@ -20,6 +20,12 @@ export default function Login() {
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
+	const [actionInProgress, setActionInProgress] = useState(false);
+
+	const [loginUserData, setLoginUserData] = useState({
+		username: "",
+		password: "",
+	});
 
 	useEffect(() => {
 		document.title = "Login | DiaryLogs";
@@ -31,15 +37,20 @@ export default function Login() {
 		}
 	}, []);
 
-	const [loginUserData, setLoginUserData] = useState({
-		username: "",
-		password: "",
-	});
-
 	const [validationError, setValidationError] = useState({
 		message: "",
 		active: false,
 	});
+
+	useEffect(() => {
+		if (!validationError.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationError({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationError.active]);
 
 	// Input Field Update Function
 	const inputOnChange = (event) => {
@@ -102,12 +113,19 @@ export default function Login() {
 
 	// Server Function
 	const loginUser = async (data) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.post(`${API_URL}/api/user/login`, data);
+			const response = await axios.post(
+				`${API_URL}/api/user/login`,
+				data
+			);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
 			console.error("Error:", error);
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -163,7 +181,9 @@ export default function Login() {
 							/>
 						</div>
 
-						<button type="submit">Sign In</button>
+						<button type="submit" disabled={actionInProgress}>
+							{actionInProgress ? "Signing In..." : "Sign In"}
+						</button>
 					</form>
 
 					<hr />

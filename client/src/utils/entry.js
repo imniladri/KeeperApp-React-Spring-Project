@@ -1,6 +1,7 @@
 const entryObj = {
 	entry: "",
-	timestamp: "",
+	createTimestamp: "",
+	updateTimestamp: "",
 	user: "",
 };
 

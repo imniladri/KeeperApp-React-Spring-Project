@@ -20,6 +20,8 @@ export default function Register() {
 	const navigate = useNavigate();
 
 	const [user, setUser] = useState(null);
+	const [registerUserData, setRegisterUserData] = useState(userObj);
+	const [actionInProgress, setActionInProgress] = useState(false);
 
 	useEffect(() => {
 		document.title = "Registration | DiaryLogs";
@@ -31,17 +33,35 @@ export default function Register() {
 		}
 	}, []);
 
-	const [registerUserData, setRegisterUserData] = useState(userObj);
-
 	const [validationError, setValidationError] = useState({
 		message: "",
 		active: false,
 	});
 
+	useEffect(() => {
+		if (!validationError.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationError({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationError.active]);
+
 	const [validationSuccess, setValidationSuccess] = useState({
 		message: "",
 		active: false,
 	});
+
+	useEffect(() => {
+		if (!validationSuccess.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationSuccess({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationSuccess.active]);
 
 	// Input Field Update Function
 	const inputOnChange = (event) => {
@@ -113,6 +133,8 @@ export default function Register() {
 
 	// Server Function
 	const registerUser = async (data) => {
+		setActionInProgress(true);
+
 		try {
 			const isEmailExist = await axios.get(
 				`${API_URL}/api/user/validate/email/${data.email}`
@@ -184,6 +206,8 @@ export default function Register() {
 			}
 		} catch (error) {
 			console.error("Error:", error);
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -223,7 +247,9 @@ export default function Register() {
 								: "successtext"
 						}
 					>
-						<p className="successmsg">{validationSuccess.message}</p>
+						<p className="successmsg">
+							{validationSuccess.message}
+						</p>
 						<i
 							className="bx bx-x closeBtn"
 							onClick={() => {
@@ -299,7 +325,11 @@ export default function Register() {
 							readOnly
 						/>
 
-						<button type="submit">Register Now</button>
+						<button type="submit" disabled={actionInProgress}>
+							{actionInProgress
+								? "Registering..."
+								: "Register Now"}
+						</button>
 					</form>
 
 					<hr />

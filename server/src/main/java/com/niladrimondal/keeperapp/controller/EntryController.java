@@ -42,17 +42,22 @@ public class EntryController {
 		return entryService.saveEntryDetails(entryDetails);
 	}
 
+	@PutMapping("/entry/edit/{entryId}")
+	public Entry editEntry(@PathVariable("entryId") Integer entryId, @RequestBody Entry updatedEntry) {
+		return entryService.updateEntry(entryId, updatedEntry);
+	}
+
 	@PutMapping("/entry/edit/detail/{entryDetailId}")
 	public EntryDetails editEntryDetails(@PathVariable("entryDetailId") Integer entryDetailId,
 			@RequestBody EntryDetails updatedEntryDetails) {
 		return entryService.updateEntryDetails(entryDetailId, updatedEntryDetails);
 	}
-	
+
 	@DeleteMapping("/entry/delete/{entryId}")
 	public boolean deleteEntry(@PathVariable("entryId") Integer entryId) {
 		return entryService.deleteEntry(entryId);
 	}
-	
+
 	@DeleteMapping("/entry/delete/detail/{entryDetailId}")
 	public boolean deleteEntryDetails(@PathVariable("entryDetailId") Integer entryDetailId) {
 		return entryService.deleteEntryDetails(entryDetailId);
