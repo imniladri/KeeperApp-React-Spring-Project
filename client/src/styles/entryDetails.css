@@ -136,7 +136,8 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content {
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content .card-header {
 	margin: 0;
-	padding: 1rem 1.5rem 0.5rem;
+	padding-top: 1rem;
+    padding-bottom: 0.5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -145,7 +146,6 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .card-header {
 }
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content h6 {
-	margin: 0.5rem 0;
 	font: 450 1.8rem/1.4 var(--mainfont);
 	color: var(--primaryblack);
 	letter-spacing: 0.2px;
@@ -163,7 +163,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content h6 span {
 	text-align: center;
 	text-transform: uppercase;
 	width: fit-content;
-	border-radius: 1rem 1rem 0 0;
+	border-radius: 0 1rem 1rem 0;
 }
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content p {
@@ -180,7 +180,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a {
 	position: relative;
-	margin: 0.5rem;
+	margin: 0.3rem;
 	padding: 0.5rem 0.8rem;
 	color: var(--secondarycolor);
 	background: rgba(4, 194, 127, 0.1);
@@ -192,7 +192,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn {
     position: relative;
-	margin: 0.5rem;
+	margin: 0.3rem;
 	padding: 0.6rem 0.8rem;
 	color: #ef4444;
     background: rgba(255, 59, 48, 0.1);
@@ -236,13 +236,13 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 }
 
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a span {
-	font: 450 1.8rem/1.4 var(--mainfont);
+	font: 450 1.7rem/1.4 var(--mainfont);
 	letter-spacing: 0.4px;
 }
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons a svg,
 div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons button.deleteBtn svg {
-	width: 2.4rem;
-	height: 2.4rem;
+	width: 2.2rem;
+	height: 2.2rem;
 }
 
 /* **************************** Responsive Medias **************************** */
