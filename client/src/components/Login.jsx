@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 
 import "../styles/auth.css";
 
@@ -116,14 +117,21 @@ export default function Login() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.post(
-				`${API_URL}/api/user/login`,
-				data
-			);
+			const response = await apiClient.post(`/api/user/login`, data);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+
+			if (apiErrorMsg.type === "UNAUTHORIZED") {
+				navigate("/login");
+			}
+			return;
 		} finally {
 			setActionInProgress(false);
 		}

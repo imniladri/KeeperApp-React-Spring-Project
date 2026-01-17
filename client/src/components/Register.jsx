@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 import { userObj } from "../utils/user";
 import "../styles/auth.css";
 
@@ -136,11 +137,11 @@ export default function Register() {
 		setActionInProgress(true);
 
 		try {
-			const isEmailExist = await axios.get(
-				`${API_URL}/api/user/validate/email/${data.email}`
+			const isEmailExist = await apiClient.get(
+				`/api/user/validate/email/${data.email}`,
 			);
-			const isUsernameExist = await axios.get(
-				`${API_URL}/api/user/validate/username/${data.username}`
+			const isUsernameExist = await apiClient.get(
+				`/api/user/validate/username/${data.username}`,
 			);
 
 			if (
@@ -172,10 +173,7 @@ export default function Register() {
 				return;
 			}
 
-			const response = await axios.post(
-				`${API_URL}/api/user/register`,
-				data
-			);
+			const response = await apiClient.post(`/api/user/register`, data);
 			// console.log("Response:", response);
 			if (
 				response.data.username === registerUserData.username &&
@@ -205,7 +203,14 @@ export default function Register() {
 				return;
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+			return;
 		} finally {
 			setActionInProgress(false);
 		}
