@@ -32,7 +32,7 @@ public class UserController {
 		if(validUser) {
 			return userService.getUser(loginUsername);
 		} else {
-			throw new UserNotFoundException("Not Found");
+			throw new UserNotFoundException("User Not Found");
 		}
 	}
 

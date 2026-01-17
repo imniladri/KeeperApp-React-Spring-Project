@@ -75,12 +75,12 @@ public class EntryService {
 	}
 
 	public Entry getEntryById(Integer entryId) {
-		Entry entry = entryRepository.findById(entryId).get();
+		Entry entry = entryRepository.findById(entryId).orElse(null);
 		return entry;
 	}
 	
 	public EntryDetails getEntryDetailsById(Integer entryDetailId) {
-		EntryDetails entryDetails = entryDetailsRepository.findById(entryDetailId).get();
+		EntryDetails entryDetails = entryDetailsRepository.findById(entryDetailId).orElse(null);
 		return entryDetails;
 	}
 

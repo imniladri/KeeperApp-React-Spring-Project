@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niladrimondal.keeperapp.entity.Entry;
 import com.niladrimondal.keeperapp.entity.EntryDetails;
 import com.niladrimondal.keeperapp.entity.User;
+import com.niladrimondal.keeperapp.exception.EntryNotFoundException;
 import com.niladrimondal.keeperapp.service.EntryService;
 import com.niladrimondal.keeperapp.service.UserService;
 
@@ -65,12 +66,22 @@ public class EntryController {
 
 	@GetMapping("/entry/id/{entryId}")
 	public Entry getEntryById(@PathVariable("entryId") Integer entryId) {
-		return entryService.getEntryById(entryId);
+		Entry entryObj = entryService.getEntryById(entryId);
+		if (entryObj != null) {
+			return entryObj;
+		} else {
+			throw new EntryNotFoundException("Entry Not Found");
+		}
 	}
 
 	@GetMapping("/entry/detail/id/{entryDetailId}")
 	public EntryDetails getEntryDetailsById(@PathVariable("entryDetailId") Integer entryDetailId) {
-		return entryService.getEntryDetailsById(entryDetailId);
+		EntryDetails entryDetailsObj = entryService.getEntryDetailsById(entryDetailId);
+		if (entryDetailsObj != null) {
+			return entryDetailsObj;
+		} else {
+			throw new EntryNotFoundException("Entry Details Not Found");
+		}
 	}
 
 	@GetMapping("/entry/user/{username}")
