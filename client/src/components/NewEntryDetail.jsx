@@ -5,7 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../helpers/NavHeader";
 import ConfirmModal from "../helpers/ConfirmModal";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 import { entryDetailObj } from "../utils/entryDetail";
 import "../styles/newEntryDetail.css";
 
@@ -69,8 +70,14 @@ export default function NewEntryDetail() {
 
 		const user = JSON.parse(localStorage.getItem("user"));
 
-		if (!user) {
-			navigate("/login");
+		if (!user || user.username !== username) {
+			localStorage.removeItem("user");
+			navigate("/login", {
+				state: {
+					message: "Invalid User Detected.",
+					type: "error",
+				},
+			});
 			return;
 		}
 
@@ -174,15 +181,21 @@ export default function NewEntryDetail() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.post(
-				`${API_URL}/api/entry/new/detail`,
-				data
+			const response = await apiClient.post(
+				`/api/entry/new/detail`,
+				data,
 			);
 			// console.log("Response:", response);
 			navigate(`/${username}/entry/${entryId}`);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 		}
@@ -193,15 +206,21 @@ export default function NewEntryDetail() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.put(
-				`${API_URL}/api/entry/edit/detail/${entryDetailId}`,
-				data
+			const response = await apiClient.put(
+				`/api/entry/edit/detail/${entryDetailId}`,
+				data,
 			);
 			// console.log("Response:", response);
 			navigate(`/${username}/entry/${entryId}`);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 		}
@@ -212,8 +231,8 @@ export default function NewEntryDetail() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.delete(
-				`${API_URL}/api/entry/delete/detail/${entryDetailId}`
+			const response = await apiClient.delete(
+				`/api/entry/delete/detail/${entryDetailId}`,
 			);
 
 			if (response.data === true) {
@@ -226,7 +245,13 @@ export default function NewEntryDetail() {
 				window.scrollTo(0, 0);
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 			setShowConfirmModal(false);
@@ -235,27 +260,55 @@ export default function NewEntryDetail() {
 
 	// Server Function
 	const getEntryData = async (entryId) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/id/${entryId}`
-			);
+			const response = await apiClient.get(`/api/entry/id/${entryId}`);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "NOT_FOUND") {
+				navigate("/entries");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
 	// Server Function
 	const getEntryDetailData = async (entryDetailId) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/detail/id/${entryDetailId}`
+			const response = await apiClient.get(
+				`/api/entry/detail/id/${entryDetailId}`,
 			);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "NOT_FOUND") {
+				navigate("/entries");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -285,8 +338,8 @@ export default function NewEntryDetail() {
 												? "Updating..."
 												: "Update Entry Detail"
 											: actionInProgress
-											? "Saving..."
-											: "Save Entry Detail"}
+												? "Saving..."
+												: "Save Entry Detail"}
 									</span>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -416,8 +469,8 @@ export default function NewEntryDetail() {
 									entryDetailData.entryContent.split("\n")
 										.length < 10
 										? entryDetailData.entryContent.split(
-												"\n"
-										  ).length + 10
+												"\n",
+											).length + 10
 										: 20
 								}
 							></textarea>

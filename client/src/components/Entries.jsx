@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
 import ConfirmModal from "../helpers/ConfirmModal";
 import LoadingSkeleton from "../helpers/LoadingSkeleton";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 import "../styles/entries.css";
 
 export default function Entries() {
@@ -16,6 +17,7 @@ export default function Entries() {
 	};
 
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const [user, setUser] = useState(null);
 	const [userEntires, setUserEntires] = useState([]);
@@ -58,34 +60,80 @@ export default function Entries() {
 		document.title = "All Entries | DiaryLogs";
 
 		const user = JSON.parse(localStorage.getItem("user"));
-		if (user) {
-			setUser(user);
 
-			const fetchEntries = async () => {
-				try {
-					const data = await getUserEntries(user.username);
-					setUserEntires(data || []);
-				} finally {
-					setIsLoading(false);
-				}
-			};
-
-			fetchEntries();
-		} else {
-			navigate("/login");
+		if (!user) {
+			localStorage.removeItem("user");
+			navigate("/login", {
+				state: {
+					message: "Invalid User Detected.",
+					type: "error",
+				},
+			});
+			return;
 		}
+
+		setUser(user);
+
+		const fetchEntries = async () => {
+			try {
+				const data = await getUserEntries(user.username);
+				setUserEntires(data || []);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchEntries();
 	}, []);
+
+	useEffect(() => {
+		const toastState = location.state;
+		if (!toastState?.message) return;
+
+		if (toastState.type === "success") {
+			setValidationSuccess({
+				message: toastState.message,
+				active: true,
+			});
+		} else {
+			setValidationError({
+				message: toastState.message,
+				active: true,
+			});
+		}
+
+		// Clear the history state so refresh doesn't trigger again
+		window.history.replaceState({}, document.title);
+		window.scrollTo(0, 0);
+	}, [location.state]);
 
 	// Server Function
 	const getUserEntries = async (username) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/user/${username}`
-			);
+			const response = await apiClient.get(`/api/entry/user/${username}`);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			if (apiErrorMsg.type === "NETWORK") {
+				navigate("/");
+			}
+
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "UNAUTHORIZED") {
+				navigate("/login");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -94,14 +142,14 @@ export default function Entries() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.delete(
-				`${API_URL}/api/entry/delete/${entryId}`
+			const response = await apiClient.delete(
+				`/api/entry/delete/${entryId}`,
 			);
 
 			if (response.data === true) {
 				// Remove deleted item from state (NO page reload)
 				setUserEntires((prev) =>
-					prev.filter((d) => d.entryId !== entryId)
+					prev.filter((d) => d.entryId !== entryId),
 				);
 				setValidationSuccess({
 					message: "Entry Deleted Successfully!",
@@ -116,7 +164,13 @@ export default function Entries() {
 				window.scrollTo(0, 0);
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 			setShowConfirmModal(false);
@@ -130,8 +184,10 @@ export default function Entries() {
 			<section id="entries">
 				<div className="entries_banner">
 					{user &&
-						(userEntires.length === 0 ? (
-							<EntriesEmpty user={user} isLoading={isLoading} />
+						(isLoading ? (
+							<LoadingSkeleton />
+						) : userEntires.length === 0 ? (
+							<EntriesEmpty user={user} />
 						) : (
 							<EntriesNotEmpty
 								user={user}
@@ -156,7 +212,7 @@ export default function Entries() {
 	);
 }
 
-function EntriesEmpty({ user, isLoading }) {
+function EntriesEmpty({ user }) {
 	return (
 		<>
 			<div className="entries_header">
@@ -166,17 +222,13 @@ function EntriesEmpty({ user, isLoading }) {
 			</div>
 
 			<div className="entries_body">
-				{isLoading ? (
-					<LoadingSkeleton />
-				) : (
-					<Link
-						to={`/${user.username}/entry/new`}
-						className="entries_empty"
-					>
-						<img src="/img/empty-folder.svg" alt="Empty" />
-						<p>No new entries have been added yet.</p>
-					</Link>
-				)}
+				<Link
+					to={`/${user.username}/entry/new`}
+					className="entries_empty"
+				>
+					<img src="/img/empty-folder.svg" alt="Empty" />
+					<p>No new entries have been added yet.</p>
+				</Link>
 			</div>
 		</>
 	);
@@ -263,7 +315,7 @@ function EntriesNotEmpty({
 								entry.createTimestamp ? (
 									<>
 										{new Date(
-											entry.updateTimestamp
+											entry.updateTimestamp,
 										).toLocaleDateString("en-US", {
 											month: "short",
 											day: "numeric",
@@ -274,7 +326,7 @@ function EntriesNotEmpty({
 								) : (
 									<>
 										{new Date(
-											entry.createTimestamp
+											entry.createTimestamp,
 										).toLocaleDateString("en-US", {
 											month: "short",
 											day: "numeric",

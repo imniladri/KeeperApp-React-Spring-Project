@@ -6,7 +6,8 @@ import Header from "../helpers/NavHeader";
 import ConfirmModal from "../helpers/ConfirmModal";
 import LoadingSkeleton from "../helpers/LoadingSkeleton";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 import "../styles/entryDetails.css";
 
 export default function EntryDetails() {
@@ -62,8 +63,14 @@ export default function EntryDetails() {
 
 		const user = JSON.parse(localStorage.getItem("user"));
 
-		if (!user) {
-			navigate("/login");
+		if (!user || user.username !== username) {
+			localStorage.removeItem("user");
+			navigate("/login", {
+				state: {
+					message: "Invalid User Detected.",
+					type: "error",
+				},
+			});
 			return;
 		}
 
@@ -72,45 +79,89 @@ export default function EntryDetails() {
 		const fetchEntryData = async () => {
 			const data = await getEntryData(entryId);
 			setEntryData(data || null);
-		};
 
-		fetchEntryData();
-
-		const fetchEntryDetails = async () => {
-			try {
-				const data = await getEntryDetails(entryId);
-				setEntryDetails(data || []);
-			} finally {
-				setIsLoading(false);
+			if (data.status === 404) {
+				navigate("/entries", {
+					state: {
+						message: "Entry not found or deleted.",
+						type: "error",
+					},
+				});
+				return;
 			}
 		};
 
-		fetchEntryDetails();
+		const fetchEntryDetails = async () => {
+			const data = await getEntryDetails(entryId);
+			setEntryDetails(data || []);
+		};
+
+		Promise.all([fetchEntryData(), fetchEntryDetails()]).finally(() =>
+			setIsLoading(false),
+		);
 	}, [entryId, navigate]);
+
+	const isBootLoading = isLoading || !entryData;
 
 	// Server Function
 	const getEntryData = async (entryId) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/id/${entryId}`
-			);
+			const response = await apiClient.get(`/api/entry/id/${entryId}`);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			if (apiErrorMsg.type === "NETWORK") {
+				navigate("/");
+			}
+
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "NOT_FOUND") {
+				navigate("/entries");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
 	// Server Function
 	const getEntryDetails = async (entryId) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/details/${entryId}`
+			const response = await apiClient.get(
+				`/api/entry/details/${entryId}`,
 			);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			if (apiErrorMsg.type === "NETWORK") {
+				navigate("/");
+			}
+
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "NOT_FOUND") {
+				navigate("/entries");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -119,14 +170,14 @@ export default function EntryDetails() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.delete(
-				`${API_URL}/api/entry/delete/detail/${entryDetailId}`
+			const response = await apiClient.delete(
+				`/api/entry/delete/detail/${entryDetailId}`,
 			);
 
 			if (response.data === true) {
 				// Remove deleted item from state (NO page reload)
 				setEntryDetails((prev) =>
-					prev.filter((d) => d.entryDetailId !== entryDetailId)
+					prev.filter((d) => d.entryDetailId !== entryDetailId),
 				);
 				setValidationSuccess({
 					message: "Entry Detail Deleted Successfully!",
@@ -141,7 +192,13 @@ export default function EntryDetails() {
 				window.scrollTo(0, 0);
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 			setShowConfirmModal(false);
@@ -154,31 +211,36 @@ export default function EntryDetails() {
 
 			<section id="entryDetails">
 				<div className="entryDetails_banner">
-					{entryDetails.length === 0 ? (
-						<EntryDetailsEmpty
-							username={username}
-							entryId={entryId}
-							entryData={entryData}
-							isLoading={isLoading}
-						/>
-					) : (
-						<EntryDetailsNotEmpty
-							username={username}
-							entryId={entryId}
-							entryData={entryData}
-							entryDetails={entryDetails}
-							onDelete={handleDeleteEntryDetail}
-							validationSuccess={validationSuccess}
-							setValidationSuccess={setValidationSuccess}
-							validationError={validationError}
-							setValidationError={setValidationError}
-							actionInProgress={actionInProgress}
-							showConfirmModal={showConfirmModal}
-							setShowConfirmModal={setShowConfirmModal}
-							selectedEntryDetailId={selectedEntryDetailId}
-							setSelectedEntryDetailId={setSelectedEntryDetailId}
-						/>
-					)}
+					{user &&
+						(isBootLoading ? (
+							<LoadingSkeleton />
+						) : entryDetails.length === 0 ? (
+							<EntryDetailsEmpty
+								username={username}
+								entryId={entryId}
+								entryData={entryData}
+								isLoading={isLoading}
+							/>
+						) : (
+							<EntryDetailsNotEmpty
+								username={username}
+								entryId={entryId}
+								entryData={entryData}
+								entryDetails={entryDetails}
+								onDelete={handleDeleteEntryDetail}
+								validationSuccess={validationSuccess}
+								setValidationSuccess={setValidationSuccess}
+								validationError={validationError}
+								setValidationError={setValidationError}
+								actionInProgress={actionInProgress}
+								showConfirmModal={showConfirmModal}
+								setShowConfirmModal={setShowConfirmModal}
+								selectedEntryDetailId={selectedEntryDetailId}
+								setSelectedEntryDetailId={
+									setSelectedEntryDetailId
+								}
+							/>
+						))}
 				</div>
 			</section>
 
@@ -198,17 +260,13 @@ function EntryDetailsEmpty({ username, entryId, entryData, isLoading }) {
 			</div>
 
 			<div className="entryDetails_body">
-				{isLoading ? (
-					<LoadingSkeleton />
-				) : (
-					<Link
-						to={`/${username}/entry/${entryId}/new`}
-						className="entryDetails_empty"
-					>
-						<img src="/img/empty-folder.svg" alt="Empty" />
-						<p>No details have been added yet for this Entry.</p>
-					</Link>
-				)}
+				<Link
+					to={`/${username}/entry/${entryId}/new`}
+					className="entryDetails_empty"
+				>
+					<img src="/img/empty-folder.svg" alt="Empty" />
+					<p>No details have been added yet for this Entry.</p>
+				</Link>
 			</div>
 		</>
 	);
@@ -349,7 +407,7 @@ function EntryDetailsNotEmpty({
 									className="deleteBtn"
 									onClick={() => {
 										setSelectedEntryDetailId(
-											detail.entryDetailId
+											detail.entryDetailId,
 										);
 										setShowConfirmModal(true);
 									}}

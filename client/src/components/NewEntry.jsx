@@ -5,7 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../helpers/NavHeader";
 import ConfirmModal from "../helpers/ConfirmModal";
 
-import API_URL from "../utils/API_URL";
+import apiClient from "../api/apiClient";
+import apiErrorHandler from "../utils/apiErrorHandler";
 import { entryObj } from "../utils/entry";
 import "../styles/newEntry.css";
 
@@ -62,8 +63,14 @@ export default function NewEntry() {
 
 		const user = JSON.parse(localStorage.getItem("user"));
 
-		if (!user) {
-			navigate("/login");
+		if (!user || user.username !== username) {
+			localStorage.removeItem("user");
+			navigate("/login", {
+				state: {
+					message: "Invalid User Detected.",
+					type: "error",
+				},
+			});
 			return;
 		}
 
@@ -160,12 +167,18 @@ export default function NewEntry() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.post(`${API_URL}/api/entry/new`, data);
+			const response = await apiClient.post(`/api/entry/new`, data);
 			// console.log("Response:", response);
 			navigate("/entries");
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 		}
@@ -176,15 +189,21 @@ export default function NewEntry() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.put(
-				`${API_URL}/api/entry/edit/${entryId}`,
-				data
+			const response = await apiClient.put(
+				`/api/entry/edit/${entryId}`,
+				data,
 			);
 			// console.log("Response:", response);
 			navigate(`/${username}/entry`);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 		}
@@ -195,8 +214,8 @@ export default function NewEntry() {
 		setActionInProgress(true);
 
 		try {
-			const response = await axios.delete(
-				`${API_URL}/api/entry/delete/${entryId}`
+			const response = await apiClient.delete(
+				`/api/entry/delete/${entryId}`,
 			);
 
 			if (response.data === true) {
@@ -209,7 +228,13 @@ export default function NewEntry() {
 				window.scrollTo(0, 0);
 			}
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
 		} finally {
 			setActionInProgress(false);
 			setShowConfirmModal(false);
@@ -218,14 +243,27 @@ export default function NewEntry() {
 
 	// Server Function
 	const getEntryData = async (entryId) => {
+		setActionInProgress(true);
+
 		try {
-			const response = await axios.get(
-				`${API_URL}/api/entry/id/${entryId}`
-			);
+			const response = await apiClient.get(`/api/entry/id/${entryId}`);
 			// console.log("Response:", response);
 			return response.data;
 		} catch (error) {
-			console.error("Error:", error);
+			// console.error("Error:", error);
+			const apiErrorMsg = apiErrorHandler(error);
+			setValidationError({
+				message: apiErrorMsg.message,
+				active: true,
+			});
+			window.scrollTo(0, 0);
+
+			if (apiErrorMsg.type === "NOT_FOUND") {
+				navigate("/entries");
+			}
+			return;
+		} finally {
+			setActionInProgress(false);
 		}
 	};
 
@@ -254,8 +292,8 @@ export default function NewEntry() {
 												? "Updating..."
 												: "Update Entry"
 											: actionInProgress
-											? "Adding..."
-											: "Add Entry"}
+												? "Adding..."
+												: "Add Entry"}
 									</span>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"

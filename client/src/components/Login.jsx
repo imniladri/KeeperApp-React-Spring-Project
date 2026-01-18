@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
 
@@ -19,6 +19,7 @@ export default function Login() {
 	};
 
 	const navigate = useNavigate();
+    const location = useLocation();
 
 	const [user, setUser] = useState(null);
 	const [actionInProgress, setActionInProgress] = useState(false);
@@ -43,7 +44,12 @@ export default function Login() {
 		active: false,
 	});
 
-	useEffect(() => {
+    const [validationSuccess, setValidationSuccess] = useState({
+		message: "",
+		active: false,
+	});
+    
+    useEffect(() => {
 		if (!validationError.active) return;
 
 		const timer = setTimeout(() => {
@@ -52,6 +58,37 @@ export default function Login() {
 
 		return () => clearTimeout(timer);
 	}, [validationError.active]);
+
+    useEffect(() => {
+		if (!validationSuccess.active) return;
+
+		const timer = setTimeout(() => {
+			setValidationSuccess({ message: "", active: false });
+		}, 3000);
+
+		return () => clearTimeout(timer);
+	}, [validationSuccess.active]);
+
+    useEffect(() => {
+		const toastState = location.state;
+		if (!toastState?.message) return;
+
+		if (toastState.type === "success") {
+			setValidationSuccess({
+				message: toastState.message,
+				active: true,
+			});
+		} else {
+			setValidationError({
+				message: toastState.message,
+				active: true,
+			});
+		}
+
+		// Clear the history state so refresh doesn't trigger again
+		window.history.replaceState({}, document.title);
+		window.scrollTo(0, 0);
+	}, [location.state]);
 
 	// Input Field Update Function
 	const inputOnChange = (event) => {
@@ -159,6 +196,27 @@ export default function Login() {
 							className="bx bx-x closeBtn"
 							onClick={() => {
 								setValidationError({
+									message: "",
+									active: false,
+								});
+							}}
+						></i>
+					</div>
+
+					<div
+						className={
+							validationSuccess.active
+								? "successtext active"
+								: "successtext"
+						}
+					>
+						<p className="successmsg">
+							{validationSuccess.message}
+						</p>
+						<i
+							className="bx bx-x closeBtn"
+							onClick={() => {
+								setValidationSuccess({
 									message: "",
 									active: false,
 								});
