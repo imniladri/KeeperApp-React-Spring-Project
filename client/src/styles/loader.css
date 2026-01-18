@@ -1,0 +1,125 @@
+div.loading_header {
+	position: relative;
+	margin: auto;
+	padding: 0.5rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+div.loading_header::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 2.5px;
+	background: var(--primarygrey);
+	border-radius: 4px;
+}
+
+div.loading_header h2.loading_header_h2 {
+	margin: 1rem 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.loading_header h2.loading_header_h2 span.loaderText {
+	margin-left: 1rem;
+	font: 450 3rem var(--mainfont);
+	color: var(--primaryblack);
+}
+
+div.loading_header h2.loading_header_h2 span.loaderIcon {
+	position: relative;
+	width: 2.5rem;
+	height: 2.5rem;
+	border-radius: 50%;
+	animation: spinner 1s linear infinite;
+}
+
+div.loading_header h2.loading_header_h2 span.loaderIcon::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: 0px;
+	border-radius: 50%;
+	border: 4px solid var(--primaryblack);
+	clip-path: inset(0 0 0 50%);
+}
+
+div.loading_header h2.loading_header_h2 span.loaderIcon::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: 0px;
+	border-radius: 50%;
+	border: 4px solid var(--secondarycolor);
+	clip-path: inset(0 50% 0 0);
+}
+
+div.loading_body {
+	margin: 2rem 0;
+	padding: 0;
+}
+
+div.loading_body div.loading_skeleton {
+	position: relative;
+	margin: auto;
+	padding: 4rem 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background: var(--primarywhite);
+	border: 2px dashed var(--primarygrey);
+	border-radius: 1rem;
+	z-index: 1;
+	transition: all 0.15s ease-in-out;
+}
+
+div.loading_body div.loading_skeleton::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: var(--primarygrey);
+	animation: shimmer 1.5s ease-in-out infinite;
+	z-index: -1;
+}
+
+div.loading_body div.loading_skeleton svg.loading_skeleton_icon {
+	margin: 1rem auto;
+	width: 6rem;
+	height: auto;
+	color: var(--primarygrey);
+	z-index: 2;
+	animation: spinner 3s linear infinite;
+}
+
+div.loading_body div.loading_skeleton h4.loading_skeleton_text {
+	font: 450 3.2rem var(--mainfont);
+	color: var(--primarygrey);
+	letter-spacing: 0.2px;
+	text-align: center;
+	z-index: 2;
+}
+
+@keyframes spinner {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		opacity: 0.2;
+	}
+	50% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 0.2;
+	}
+}
