@@ -230,7 +230,7 @@ function EntriesEmpty({ user }) {
 					className="entries_empty"
 				>
 					<img src="/img/empty-folder.svg" alt="Empty" />
-					<p>No new entries have been added yet.</p>
+					<p>No new entries have been added yet. Click here to add one.</p>
 				</Link>
 			</div>
 		</>

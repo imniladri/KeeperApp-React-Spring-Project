@@ -268,7 +268,7 @@ function EntryDetailsEmpty({ username, entryId, entryData, isLoading }) {
 					className="entryDetails_empty"
 				>
 					<img src="/img/empty-folder.svg" alt="Empty" />
-					<p>No details have been added yet for this Entry.</p>
+					<p>No details have been added yet for this Entry. Click here to add one.</p>
 				</Link>
 			</div>
 		</>
