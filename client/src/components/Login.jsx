@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
+import Footer from "../helpers/Footer";
 
 import apiClient from "../api/apiClient";
 import apiErrorHandler from "../utils/apiErrorHandler";
@@ -261,6 +262,8 @@ export default function Login() {
 					</p>
 				</div>
 			</section>
+
+            <Footer />
 
 			<div className="bg-pattern"></div>
 		</>

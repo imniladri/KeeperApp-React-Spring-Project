@@ -3,14 +3,14 @@ header#header {
 	top: 0;
 	padding: 1rem;
 	width: 100%;
-	z-index: 10;
-	backdrop-filter: blur(2px);
+	z-index: 1;
+	backdrop-filter: blur(1px);
 }
 
 header#header nav {
 	position: relative;
 	margin: 1rem auto;
-	padding: 0.8rem 2rem;
+	padding: 1rem 2rem;
 	background: var(--primaryblack);
 	border-radius: 4px;
 	width: 80%;
@@ -95,7 +95,7 @@ header#header nav .nav-items button.nav-btn:hover {
     }
 
     header#header nav {
-        padding: 0.8rem 0.5rem;
+        padding: 1.5rem 0.5rem;
         width: 90%;
     }
     

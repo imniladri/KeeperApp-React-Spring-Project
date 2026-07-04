@@ -49,6 +49,15 @@ KeeperApp is not a direct clone but a **conceptual evolution**, adapting the Lea
 * **Hibernate** – ORM
 * **MySQL / PostgreSQL** (configurable)
 
+### Deployments Env
+
+* **[Vercel](https://vercel.com/dashboard)** - Client Deployment Tool (FrontEnd) (Free Tire)
+* **[Render](https://dashboard.render.com/)** - Server Deployment Tool (BackEnd) (Free Tire)
+* **[Cron Job](https://console.cron-job.org/dashboard)** - Server Uptime Check (Execution Interval 15 Mins)
+* **[TiDB Cloud](https://tidbcloud.com/tidbs)** - Cloud Database (MySQL DB) (Free Tire)
+
+Currently having only Production environment, other environments will be included in future releases.
+
 ---
 
 ## 📦 Features

@@ -1,0 +1,25 @@
+footer#footer {
+    position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 1;
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+footer#footer p {
+	margin: 1rem 2rem;
+	font-size: 1.6rem;
+	font-weight: 450;
+	color: var(--primaryblack);
+	text-align: center;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+footer#footer p svg {
+	margin: -4px 4px 0;
+}

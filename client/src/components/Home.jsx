@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
+import Footer from "../helpers/Footer";
 
 export default function Home() {
 	const headerProps = {
@@ -54,6 +55,8 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
+
+            <Footer />
 		</>
 	);
 }

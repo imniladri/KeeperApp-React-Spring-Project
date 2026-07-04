@@ -6,7 +6,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 1;
 }
 
 div.authentication {
@@ -141,7 +140,6 @@ div.authentication p a:active:after {
 
 @media (max-width: 576px) {
 	div.authentication {
-		margin: 2rem 1rem;
 		padding: 2rem;
 		border-radius: 5px;
 		width: 90%;

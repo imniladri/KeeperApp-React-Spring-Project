@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
+import Footer from "../helpers/Footer";
 import ConfirmModal from "../helpers/ConfirmModal";
 
 import apiClient from "../api/apiClient";
@@ -431,6 +432,8 @@ export default function NewEntry() {
 					</form>
 				</div>
 			</section>
+
+            <Footer />
 
 			<div className="bg-pattern"></div>
 		</>

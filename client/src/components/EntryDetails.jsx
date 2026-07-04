@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Header from "../helpers/NavHeader";
+import Footer from "../helpers/Footer";
 import ConfirmModal from "../helpers/ConfirmModal";
 import LoadingSkeleton from "../helpers/LoadingSkeleton";
 
@@ -243,6 +244,8 @@ export default function EntryDetails() {
 						))}
 				</div>
 			</section>
+
+            <Footer />
 
 			<div className="bg-pattern"></div>
 		</>
