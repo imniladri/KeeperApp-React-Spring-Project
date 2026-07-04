@@ -139,17 +139,12 @@ div.authentication p a:active:after {
 
 /* **************************** Responsive Medias **************************** */
 
-@media (max-width: 768px) {
-	div.authentication {
-		width: 80%;
-	}
-}
-
 @media (max-width: 576px) {
 	div.authentication {
-		margin: 2rem;
+		margin: 2rem 1rem;
 		padding: 2rem;
 		border-radius: 5px;
+		width: 90%;
 	}
 	div.authentication h2 {
 		font-size: 3rem;
@@ -158,4 +153,7 @@ div.authentication p a:active:after {
 	div.authentication .errortext p {
 		width: 80%;
 	}
+    div.authentication form input {
+        border-radius: 3px;
+    }
 }

@@ -161,6 +161,7 @@ section.newEntry div.newEntry_banner form .newEntry_input input:focus {
 @media (max-width: 576px) {
     section.newEntry div.newEntry_banner {
         padding: 2rem 1rem;
+        width: 90%;
     }
     section.newEntry div.newEntry_banner form .newEntry_header {
         flex-wrap: wrap;
@@ -170,6 +171,10 @@ section.newEntry div.newEntry_banner form .newEntry_input input:focus {
     }
     section.newEntry div.newEntry_banner form .newEntry_header button span {
         display: none;
+    }
+    section.newEntry div.newEntry_banner form .newEntry_input input,
+    section.newEntry div.newEntry_banner form .newEntry_input input:focus {
+        border-width: 2px;
     }
 }
 

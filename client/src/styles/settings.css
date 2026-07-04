@@ -13,13 +13,13 @@ html {
 
 @media (max-width: 992px) {
 	html {
-		font-size: 60%;
+		font-size: 50%;
 	}
 }
 
 @media (max-width: 768px) {
 	html {
-		font-size: 55%;
+		font-size: 45%;
 	}
 }
 
@@ -31,6 +31,7 @@ html {
 
 	--primarycolor: #ffd600;
 	--secondarycolor: #22c55e;
+	--tertiarycolor: #3b82f6;
 	--dangercolor: #ff0033;
 	--primaryshade: #f59e0b;
 

@@ -154,7 +154,11 @@ div.home-banner .banner-image img {
     }
 }
 
-@media (max-width: 392px) {
+@media (max-width: 576px) {
+    div.home-banner {
+        width: 90%;
+    }
+    
     div.home-banner .banner-content h2 {
         font-size: 4rem;
     }

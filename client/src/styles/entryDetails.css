@@ -250,6 +250,7 @@ div.entryDetails_banner .entryDetails_body .entryDetails_content .actionButtons 
 @media (max-width: 576px) {
 	div.entryDetails_banner {
 		padding: 2rem 1rem;
+        width: 90%;
 	}
 	div.entryDetails_banner .entryDetails_header {
 		flex-wrap: wrap;

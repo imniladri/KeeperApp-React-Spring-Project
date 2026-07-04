@@ -205,6 +205,26 @@ div.entries_banner .entries_body .entries_content .actionButtons a.editBtn {
 	transition: all 0.2s ease-in-out;
 }
 
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn {
+    position: relative;
+	margin: 0.5rem;
+	padding: 0.8rem;
+	color: var(--tertiarycolor);
+    background: rgba(59, 130, 246, 0.1);
+	text-decoration: none;
+	border-radius: 4px;
+	user-select: none;
+	transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
+}
+
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn.isBookmarked,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn:hover.isBookmarked {
+    color: var(--primarywhite);
+    background: var(--tertiarycolor);
+}
+
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn {
     position: relative;
 	margin: 0.5rem;
@@ -220,6 +240,7 @@ div.entries_banner .entries_body .entries_content .actionButtons button.deleteBt
 }
 
 div.entries_banner .entries_body .entries_content .actionButtons a.editBtn::after,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn::after,
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn::after {
 	content: "";
 	position: absolute;
@@ -238,12 +259,18 @@ div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:activ
 div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:hover {
 	background: rgba(4, 194, 127, 0.08);
 }
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn:active,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:active,
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:hover {
 	background: rgba(255, 59, 48, 0.08);
 }
 div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:active:after,
 div.entries_banner .entries_body .entries_content .actionButtons a.editBtn:hover:after,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn:active:after,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn:hover:after,
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:active:after,
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn:hover:after {
 	transform: scaleX(1);
@@ -251,9 +278,10 @@ div.entries_banner .entries_body .entries_content .actionButtons button.deleteBt
 }
 
 div.entries_banner .entries_body .entries_content .actionButtons a.editBtn svg,
+div.entries_banner .entries_body .entries_content .actionButtons button.bookmarkBtn svg,
 div.entries_banner .entries_body .entries_content .actionButtons button.deleteBtn svg {
-	width: 2.4rem;
-	height: 2.4rem;
+	width: 2rem;
+	height: 2rem;
 }
 
 /* **************************** Responsive Medias **************************** */
@@ -261,6 +289,7 @@ div.entries_banner .entries_body .entries_content .actionButtons button.deleteBt
 @media (max-width: 576px) {
 	div.entries_banner {
 		padding: 2rem 1rem;
+        width: 90%;
 	}
 	div.entries_banner .entries_header {
 		flex-wrap: wrap;

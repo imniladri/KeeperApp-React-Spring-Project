@@ -136,6 +136,7 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input .inp
     display: flex;
 	justify-content: space-between;
 	align-items: center;
+    flex-wrap: wrap;
 }
 
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input label {
@@ -204,6 +205,7 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input text
 @media (max-width: 576px) {
     section.newEntryDetail div.newEntryDetail_banner {
         padding: 2rem 1rem;
+        width: 90%;
     }
     section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header {
         flex-wrap: wrap;
@@ -213,6 +215,15 @@ section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input text
     }
     section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header button span {
         display: none;
+    }
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input .inputFields label.charCounter {
+        text-align: center;
+    }
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input input,
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea,
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input input:focus,
+    section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_input textarea:focus {
+        border-width: 2px;
     }
 }
 
