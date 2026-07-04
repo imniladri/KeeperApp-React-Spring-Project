@@ -8,6 +8,7 @@ export default function ConfirmModal({
 	cancelText = "Cancel",
 	onConfirm,
 	onCancel,
+	actionInProgress,
 }) {
 	if (!isActive) return null;
 
@@ -25,6 +26,7 @@ export default function ConfirmModal({
 							type="button"
 							className="btn cancel"
 							onClick={onCancel}
+							disabled={actionInProgress}
 						>
 							{cancelText}
 						</button>
@@ -33,6 +35,7 @@ export default function ConfirmModal({
 							type="button"
 							className="btn confirm"
 							onClick={onConfirm}
+							disabled={actionInProgress}
 						>
 							{confirmText}
 						</button>

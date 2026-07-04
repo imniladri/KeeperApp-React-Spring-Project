@@ -402,6 +402,7 @@ function EntriesNotEmpty({
 				confirmText={actionInProgress ? "Deleting..." : "Delete"}
 				onConfirm={() => onDelete(selectedEntryId)}
 				onCancel={() => setShowConfirmModal(false)}
+				actionInProgress={actionInProgress}
 			/>
 		</>
 	);

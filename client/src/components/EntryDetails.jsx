@@ -440,6 +440,7 @@ function EntryDetailsNotEmpty({
 				confirmText={actionInProgress ? "Deleting..." : "Delete"}
 				onConfirm={() => onDelete(selectedEntryDetailId)}
 				onCancel={() => setShowConfirmModal(false)}
+				actionInProgress={actionInProgress}
 			/>
 		</>
 	);
