@@ -27,12 +27,15 @@ public class UserController {
 		String loginUsername = (String) payLoadData.get("username");
 		String loginPassword = (String) payLoadData.get("password");
 
-		boolean validUser = userService.validateLogin(loginUsername,loginPassword);
+		boolean validUserName = userService.validateUsername(loginUsername);
+		boolean validUserPass = userService.validateLogin(loginUsername,loginPassword);
 
-		if(validUser) {
+		if(validUserPass) {
 			return userService.getUser(loginUsername);
+		} else if (!validUserName) {
+			throw new UserNotFoundException(404, "User Not Found");
 		} else {
-			throw new UserNotFoundException("User Not Found");
+			throw new UserNotFoundException(401, "Incorrect Password");
 		}
 	}
 

@@ -39,6 +39,10 @@ div.authentication form {
 	z-index: 1;
 }
 
+div.authentication form .form-field {
+    position: relative;
+}
+
 div.authentication form label {
 	display: block;
 	margin: 1rem 0 0.5rem;
@@ -90,6 +94,22 @@ div.authentication form button:focus,
 div.authentication form button:active {
 	background: var(--primaryblack);
 	transform: translateY(-2px);
+}
+
+div.authentication form i.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+	padding: 0.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+	border-radius: 100%;
+	cursor: pointer;
+    color: var(--primaryblack);
+	background: rgba(4, 194, 127, 0.07);
+	border: 1.5px solid rgba(4, 194, 127, 0.1);
 }
 
 div.authentication hr {

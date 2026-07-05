@@ -23,9 +23,14 @@ public class ExceptionController {
 	@ExceptionHandler
 	public ErrorResponse handleException(UserNotFoundException ex) {
 		ErrorResponse errorResponse = new ErrorResponse();
-
-		errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-		errorResponse.setMessage(ex.getMessage());
+		
+		if (ex.getStatusCode() == HttpStatus.UNAUTHORIZED.value()) {
+			errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+			errorResponse.setMessage(ex.getMessage());
+		} else {
+			errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+			errorResponse.setMessage(ex.getMessage());
+		}
 
 		return errorResponse;
 	}

@@ -20,10 +20,11 @@ export default function Login() {
 	};
 
 	const navigate = useNavigate();
-    const location = useLocation();
+	const location = useLocation();
 
 	const [user, setUser] = useState(null);
 	const [actionInProgress, setActionInProgress] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
 	const [loginUserData, setLoginUserData] = useState({
 		username: "",
@@ -45,12 +46,12 @@ export default function Login() {
 		active: false,
 	});
 
-    const [validationSuccess, setValidationSuccess] = useState({
+	const [validationSuccess, setValidationSuccess] = useState({
 		message: "",
 		active: false,
 	});
-    
-    useEffect(() => {
+
+	useEffect(() => {
 		if (!validationError.active) return;
 
 		const timer = setTimeout(() => {
@@ -60,7 +61,7 @@ export default function Login() {
 		return () => clearTimeout(timer);
 	}, [validationError.active]);
 
-    useEffect(() => {
+	useEffect(() => {
 		if (!validationSuccess.active) return;
 
 		const timer = setTimeout(() => {
@@ -70,7 +71,7 @@ export default function Login() {
 		return () => clearTimeout(timer);
 	}, [validationSuccess.active]);
 
-    useEffect(() => {
+	useEffect(() => {
 		const toastState = location.state;
 		if (!toastState?.message) return;
 
@@ -240,12 +241,24 @@ export default function Login() {
 						<div className="form-field">
 							<label htmlFor="password">Password</label>
 							<input
-								type="password"
+								type={showPassword ? "text" : "password"}
 								id="password"
 								name="password"
 								value={loginUserData.password}
 								onChange={inputOnChange}
 							/>
+							{loginUserData.password && (
+								<i
+									className={
+										showPassword
+											? "password-toggle bx bx-hide"
+											: "password-toggle bx bx-show"
+									}
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+								></i>
+							)}
 						</div>
 
 						<button type="submit" disabled={actionInProgress}>
@@ -263,7 +276,7 @@ export default function Login() {
 				</div>
 			</section>
 
-            <Footer />
+			<Footer />
 
 			<div className="bg-pattern"></div>
 		</>

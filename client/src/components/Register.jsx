@@ -24,6 +24,7 @@ export default function Register() {
 	const [user, setUser] = useState(null);
 	const [registerUserData, setRegisterUserData] = useState(userObj);
 	const [actionInProgress, setActionInProgress] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
 	useEffect(() => {
 		document.title = "Registration | DiaryLogs";
@@ -304,12 +305,24 @@ export default function Register() {
 						<div className="form-field">
 							<label htmlFor="password">Password</label>
 							<input
-								type="password"
+								type={showPassword ? "text" : "password"}
 								id="password"
 								name="password"
 								value={registerUserData.password}
 								onChange={inputOnChange}
 							/>
+							{registerUserData.password && (
+								<i
+									className={
+										showPassword
+											? "password-toggle bx bx-hide"
+											: "password-toggle bx bx-show"
+									}
+									onClick={() =>
+										setShowPassword(!showPassword)
+									}
+								></i>
+							)}
 						</div>
 
 						<div className="form-field">
@@ -348,7 +361,7 @@ export default function Register() {
 				</div>
 			</section>
 
-            <Footer />
+			<Footer />
 
 			<div className="bg-pattern"></div>
 		</>
