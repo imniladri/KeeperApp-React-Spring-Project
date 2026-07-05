@@ -22,7 +22,6 @@ section.newEntryDetail div.newEntryDetail_banner {
 section.newEntryDetail div.newEntryDetail_banner form {
     position: relative;
     margin: 1rem auto;
-    z-index: 1;
 }
 
 section.newEntryDetail div.newEntryDetail_banner form .newEntryDetail_header {

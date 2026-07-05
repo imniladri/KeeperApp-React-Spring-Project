@@ -36,7 +36,6 @@ div.authentication h2 span {
 div.authentication form {
 	position: relative;
 	margin: 1rem auto 2rem;
-	z-index: 1;
 }
 
 div.authentication form .form-field {
